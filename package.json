@@ -1,20 +1,35 @@
 {
-	"name": "hellohaxe",
-	"publisher": "",
-	"version": "0.0.1",
+	"name": "lix",
+	"version": "1.0.0",
+	"publisher": "lix",
 	"engines": {
-		"vscode": "^1.4.0"
+		"vscode": "^1.31.0"
 	},
-	"activationEvents": [
-		"onCommand:hellohaxe.sayHello"
+	"extensionDependencies": [
+		"nadako.vshaxe"
 	],
+	"displayName": "lix",
+	"description": "lix package manager support",
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"haxe"
+	],
+	"icon": "icon.png",
+	"license": "MIT",
+	"bugs": "https://github.com/lix-pm/lix.vscode/issues",
+	"homepage": "https://github.com/lix-pm/lix.vscode/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lix-pm/lix.vscode.git"
+	},
+	"scripts": {
+		"vscode:prepublish": "haxe build.hxml"
+	},
 	"main": "bin/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "hellohaxe.sayHello",
-				"title": "Say Hello"
-			}
-		]
-	}
+	"activationEvents": [
+		"workspaceContains:.haxerc"
+	],
+	"contributes": {}
 }
