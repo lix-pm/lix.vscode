@@ -31,5 +31,20 @@
 	"activationEvents": [
 		"workspaceContains:.haxerc"
 	],
-	"contributes": {}
+	"contributes": {
+		"languages": [
+			{
+				"id": "json",
+				"extensions": [
+					".haxerc"
+				]
+			}
+		],
+		"jsonValidation": [
+			{
+				"fileMatch": ".haxerc",
+				"url": "./schemas/.haxerc.schema.json"
+			}
+		]
+	}
 }
