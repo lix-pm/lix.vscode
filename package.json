@@ -8,6 +8,9 @@
 	"extensionDependencies": [
 		"nadako.vshaxe"
 	],
+	"devDependencies": {
+		"lix": "^15.4.0"
+	},
 	"displayName": "lix",
 	"description": "lix package manager support",
 	"categories": [
@@ -25,7 +28,8 @@
 		"url": "https://github.com/lix-pm/lix.vscode.git"
 	},
 	"scripts": {
-		"vscode:prepublish": "haxe build.hxml"
+		"vscode:prepublish": "haxe build.hxml",
+		"postinstall": "npx lix download"
 	},
 	"main": "bin/extension.js",
 	"activationEvents": [
