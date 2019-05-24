@@ -1,0 +1,7 @@
+-D tink_http=0.8.2
+# @install: lix --silent download "haxelib:/tink_http#0.8.2" into tink_http/0.8.2/haxelib
+-lib tink_anon
+-lib tink_io
+-lib tink_url
+-lib http-status
+-cp ${HAXE_LIBCACHE}/tink_http/0.8.2/haxelib/src

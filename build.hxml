@@ -1,7 +1,9 @@
--cp src
 -lib vscode
+-lib lix
+-cp src
 -js bin/extension.js
+-D no-deprecation-warnings
 -D analyzer-optimize
 -D js-es=6
 -debug
-Main
+Extension

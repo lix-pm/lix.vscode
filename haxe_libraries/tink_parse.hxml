@@ -1,0 +1,4 @@
+-D tink_parse=0.3.0
+# @install: lix --silent download "haxelib:/tink_parse#0.3.0" into tink_parse/0.3.0/haxelib
+-lib tink_core
+-cp ${HAXE_LIBCACHE}/tink_parse/0.3.0/haxelib/src

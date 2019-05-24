@@ -1,0 +1,12 @@
+-D lix=15.4.0
+# @install: lix --silent download "gh://github.com/lix-pm/lix.client#792357715775567378507cba5618f570c53ff9ce" into lix/15.4.0/github/792357715775567378507cba5618f570c53ff9ce
+
+-lib haxeshim
+-lib tink_semver
+-lib tink_web
+-lib compiletime
+-lib hxnodejs
+-lib tink_lang
+
+-cp ${HAXE_LIBCACHE}/lix/15.4.0/github/792357715775567378507cba5618f570c53ff9ce/src
+-cp ${HAXE_LIBCACHE}/lix/15.4.0/github/792357715775567378507cba5618f570c53ff9ce/patch
