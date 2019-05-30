@@ -9,7 +9,9 @@
 		"nadako.vshaxe"
 	],
 	"devDependencies": {
-		"lix": "^15.4.0"
+		"lix": "^15.4.0",
+		"tar": "^4.4.8",
+		"yauzl": "=2.6.0"
 	},
 	"displayName": "lix",
 	"description": "lix package manager support",
