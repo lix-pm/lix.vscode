@@ -1,3 +1,6 @@
+import tink.CoreApi.Noise;
+import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
+
 class HaxeVersionSelector {
 	static inline var Command = "lix.selectHaxeVersion";
 
@@ -30,5 +33,51 @@ class HaxeVersionSelector {
 		statusBarItem.show();
 	}
 
-	function selectHaxeVersion() {}
+	function selectHaxeVersion() {
+		switcher.officialInstalled(IncludePrereleases)
+			.handle(official -> {
+				switcher.nightliesInstalled()
+					.handle(nightlies -> {
+						var items:Array<HaxeVersionItem> = [];
+						switch official {
+							case Success(data):
+								for (version in data) {
+									items.push({
+										label: version,
+										data: ROfficial(version)
+									});
+								}
+							case Failure(_):
+						}
+						switch nightlies {
+							case Success(data):
+								for (version in data) {
+									items.push({
+										label: version.hash,
+										data: RNightly(version)
+									});
+								}
+							case Failure(_):
+						}
+						window.showQuickPick(items, {placeHolder: "Select .haxerc Haxe version"})
+							.then(version -> {
+								if (version != null) {
+									switcher.resolveInstalled(version.data)
+										.handle(resolved -> {
+											switch resolved {
+												case Success(data):
+													switcher.switchTo(data);
+												case Failure(_):
+											}
+											return Noise;
+										});
+								}
+							});
+					});
+			});
+	}
+}
+
+private typedef HaxeVersionItem = QuickPickItem & {
+	var data:ResolvedUserVersionData;
 }
