@@ -10,6 +10,7 @@
 	],
 	"devDependencies": {
 		"lix": "^15.4.0",
+		"graceful-fs": "^4.1.15",
 		"tar": "^4.4.8",
 		"yauzl": "=2.6.0"
 	},
