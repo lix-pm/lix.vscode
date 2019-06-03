@@ -9,6 +9,12 @@ class Extension {
 		var scope = Scope.seek({cwd: cwd});
 		var switcher = new Switcher(scope, true, _ -> {});
 
-		new HaxeVersionSelector(context, scope, switcher);
+		var versionSelector = new HaxeVersionSelector(context, cwd, switcher);
+
+		var watcher = workspace.createFileSystemWatcher(new RelativePattern(folders[0], ".haxerc"));
+		watcher.onDidChange(_ -> versionSelector.updateStatusBarItem());
+		watcher.onDidCreate(_ -> versionSelector.updateStatusBarItem());
+		watcher.onDidDelete(_ -> versionSelector.updateStatusBarItem());
+		context.subscriptions.push(watcher);
 	}
 }

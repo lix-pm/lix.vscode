@@ -4,13 +4,13 @@ import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 class HaxeVersionSelector {
 	static inline var Command = "lix.selectHaxeVersion";
 
-	var scope:Scope;
+	var cwd:String;
 	var switcher:Switcher;
 	var statusBarItem:StatusBarItem;
 
-	public function new(context, scope, switcher) {
-		this.scope = scope;
+	public function new(context, cwd, switcher) {
 		this.switcher = switcher;
+		this.cwd = cwd;
 
 		statusBarItem = window.createStatusBarItem(Right, 11);
 		statusBarItem.tooltip = "Select Haxe Version";
@@ -23,12 +23,13 @@ class HaxeVersionSelector {
 		updateStatusBarItem();
 	}
 
-	function updateStatusBarItem() {
+	public function updateStatusBarItem() {
 		var activeEditor = window.activeTextEditor;
 		if (activeEditor == null || activeEditor.document.languageId != "haxe") {
 			statusBarItem.hide();
 			return;
 		}
+		var scope = Scope.seek({cwd: cwd});
 		statusBarItem.text = scope.haxeInstallation.version;
 		statusBarItem.show();
 	}
