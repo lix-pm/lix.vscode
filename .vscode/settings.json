@@ -1,3 +1,5 @@
 {
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
+	"haxe.executable": "node_modules\\.bin\\haxe.cmd",
+	"haxelib.executable": "node_modules\\.bin\\haxelib.cmd"
 }

@@ -38,6 +38,13 @@
 		"workspaceContains:.haxerc"
 	],
 	"contributes": {
+		"commands": [
+			{
+				"category": "lix",
+				"command": "lix.selectHaxeVersion",
+				"title": "Select Haxe Version"
+			}
+		],
 		"languages": [
 			{
 				"id": "json",
