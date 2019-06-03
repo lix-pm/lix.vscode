@@ -85,23 +85,40 @@ class HaxeVersionSelector {
 	function installAnotherVersion() {
 		Switcher.officialOnline(IncludePrereleases).handle(official -> {
 			var items:Array<SelectableQuickPickItem> = [];
+			items.push({
+				label: "latest",
+				description: "the latest release of Haxe (including preview releases)",
+				select: installVersion.bind("latest", true)
+			});
+			items.push({
+				label: "stable",
+				description: "the latest stable release of Haxe",
+				select: installVersion.bind("stable", true)
+			});
+			items.push({
+				label: "nightly",
+				description: "the latest nightly build of Haxe",
+				select: installVersion.bind("nightly", true)
+			});
 			switch official {
 				case Success(data):
 					for (version in data) {
 						items.push({
 							label: version,
-							select: function() {
-								window.withProgress({location: Window, title: 'Installing Haxe $version...'}, function(_, _) {
-									return new js.lib.Promise((resolve, _) -> {
-										switcher.install(version, {force: false}).handle(_ -> resolve(null));
-									});
-								});
-							}
+							select: installVersion.bind(version, false)
 						});
 					}
 				case Failure(_):
 			}
 			showSelectableQuickPick(items, "Select version to download and switch to");
+		});
+	}
+
+	function installVersion(version:String, force:Bool) {
+		window.withProgress({location: Window, title: 'Installing Haxe $version...'}, function(_, _) {
+			return new js.lib.Promise((resolve, _) -> {
+				switcher.install(version, {force: false}).handle(_ -> resolve(null));
+			});
 		});
 	}
 }
