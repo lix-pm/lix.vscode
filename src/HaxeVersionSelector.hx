@@ -59,7 +59,7 @@ class HaxeVersionSelector {
 				}
 				items.push({
 					label: "Install another version...",
-					select: installAnotherVersion
+					select: installAnotherVersion.bind(items.map(item -> item.label))
 				});
 
 				showSelectableQuickPick(items, "Select an installed Haxe version to switch to");
@@ -82,7 +82,7 @@ class HaxeVersionSelector {
 		});
 	}
 
-	function installAnotherVersion() {
+	function installAnotherVersion(installed:Array<String>) {
 		Switcher.officialOnline(IncludePrereleases).handle(official -> {
 			var items:Array<SelectableQuickPickItem> = [];
 			items.push({
@@ -105,6 +105,7 @@ class HaxeVersionSelector {
 					for (version in data) {
 						items.push({
 							label: version,
+							description: if (installed.indexOf(version) == -1) "" else "installed",
 							select: installVersion.bind(version, false)
 						});
 					}
