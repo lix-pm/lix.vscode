@@ -35,6 +35,11 @@ class HaxeVersionSelector {
 	}
 
 	function selectHaxeVersion() {
+		if (lix.scope.isGlobal) {
+			// TODO: offer to create one
+			window.showErrorMessage("No .haxerc / local scope found.");
+			return;
+		}
 		lix.switcher.officialInstalled(IncludePrereleases).handle(official -> {
 			lix.switcher.nightliesInstalled().handle(nightlies -> {
 				var items:Array<SelectableQuickPickItem> = [];
