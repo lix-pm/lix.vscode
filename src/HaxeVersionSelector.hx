@@ -16,6 +16,8 @@ class HaxeVersionSelector {
 		context.subscriptions.push(statusBarItem);
 
 		window.onDidChangeActiveTextEditor(_ -> updateStatusBarItem());
+		lix.onDidChangeScope(_ -> updateStatusBarItem());
+
 		commands.registerCommand(Command, selectHaxeVersion);
 
 		updateStatusBarItem();
