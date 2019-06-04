@@ -24,12 +24,12 @@ class HaxeVersionSelector {
 	}
 
 	public function updateStatusBarItem() {
+		var scope = Scope.seek({cwd: cwd});
 		var activeEditor = window.activeTextEditor;
-		if (activeEditor == null || activeEditor.document.languageId != "haxe") {
+		if (activeEditor == null || activeEditor.document.languageId != "haxe" || scope.isGlobal) {
 			statusBarItem.hide();
 			return;
 		}
-		var scope = Scope.seek({cwd: cwd});
 		statusBarItem.text = scope.haxeInstallation.version;
 		statusBarItem.show();
 	}
@@ -62,6 +62,8 @@ class HaxeVersionSelector {
 					label: "Install another version...",
 					select: installAnotherVersion.bind(items.map(item -> item.label))
 				});
+
+				// TODO: switch to path
 
 				showSelectableQuickPick(items, "Select an installed Haxe version to switch to");
 			});

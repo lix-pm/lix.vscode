@@ -36,7 +36,11 @@
 	},
 	"main": "bin/extension.js",
 	"activationEvents": [
-		"workspaceContains:.haxerc"
+		"onLanguage:haxe",
+		"workspaceContains:.haxerc",
+		"workspaceContains:haxe_libraries",
+		"workspaceContains:./*.hxml",
+		"onCommand:lix.selectHaxeVersion"
 	],
 	"contributes": {
 		"commands": [
