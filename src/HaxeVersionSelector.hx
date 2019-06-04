@@ -3,8 +3,6 @@ import tink.CoreApi.Noise;
 import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 
 class HaxeVersionSelector {
-	static inline var Command = "lix.selectHaxeVersion";
-
 	final lix:Lix;
 	final statusBarItem:StatusBarItem;
 
@@ -13,13 +11,13 @@ class HaxeVersionSelector {
 
 		statusBarItem = window.createStatusBarItem(Right, 11);
 		statusBarItem.tooltip = "Select Haxe Version";
-		statusBarItem.command = Command;
+		statusBarItem.command = LixCommand.SelectHaxeVersion;
 		context.subscriptions.push(statusBarItem);
 
 		window.onDidChangeActiveTextEditor(_ -> updateStatusBarItem());
 		lix.onDidChangeScope(_ -> updateStatusBarItem());
 
-		commands.registerCommand(Command, selectHaxeVersion);
+		commands.registerCommand(LixCommand.SelectHaxeVersion, selectHaxeVersion);
 
 		updateStatusBarItem();
 	}

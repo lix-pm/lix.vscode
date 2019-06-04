@@ -40,7 +40,8 @@
 		"workspaceContains:.haxerc",
 		"workspaceContains:haxe_libraries",
 		"workspaceContains:./*.hxml",
-		"onCommand:lix.selectHaxeVersion"
+		"onCommand:lix.selectHaxeVersion",
+		"onCommand:lix.initializeProject"
 	],
 	"contributes": {
 		"commands": [
@@ -48,6 +49,11 @@
 				"category": "lix",
 				"command": "lix.selectHaxeVersion",
 				"title": "Select Haxe Version"
+			},
+			{
+				"category": "lix",
+				"command": "lix.initializeProject",
+				"title": "Initialize Project"
 			}
 		],
 		"languages": [
