@@ -4,13 +4,11 @@ import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 class HaxeVersionSelector {
 	static inline var Command = "lix.selectHaxeVersion";
 
-	var cwd:String;
-	var switcher:Switcher;
-	var statusBarItem:StatusBarItem;
+	final lix:Lix;
+	final statusBarItem:StatusBarItem;
 
-	public function new(context, cwd, switcher) {
-		this.switcher = switcher;
-		this.cwd = cwd;
+	public function new(context, lix) {
+		this.lix = lix;
 
 		statusBarItem = window.createStatusBarItem(Right, 11);
 		statusBarItem.tooltip = "Select Haxe Version";
@@ -23,20 +21,19 @@ class HaxeVersionSelector {
 		updateStatusBarItem();
 	}
 
-	public function updateStatusBarItem() {
-		var scope = Scope.seek({cwd: cwd});
+	function updateStatusBarItem() {
 		var activeEditor = window.activeTextEditor;
-		if (activeEditor == null || activeEditor.document.languageId != "haxe" || scope.isGlobal) {
+		if (activeEditor == null || activeEditor.document.languageId != "haxe" || lix.scope.isGlobal) {
 			statusBarItem.hide();
 			return;
 		}
-		statusBarItem.text = scope.haxeInstallation.version;
+		statusBarItem.text = lix.scope.haxeInstallation.version;
 		statusBarItem.show();
 	}
 
 	function selectHaxeVersion() {
-		switcher.officialInstalled(IncludePrereleases).handle(official -> {
-			switcher.nightliesInstalled().handle(nightlies -> {
+		lix.switcher.officialInstalled(IncludePrereleases).handle(official -> {
+			lix.switcher.nightliesInstalled().handle(nightlies -> {
 				var items:Array<SelectableQuickPickItem> = [];
 				switch official {
 					case Success(data):
@@ -75,10 +72,10 @@ class HaxeVersionSelector {
 	}
 
 	function switchToVersion(version:ResolvedUserVersionData) {
-		switcher.resolveInstalled(version).handle(resolved -> {
+		lix.switcher.resolveInstalled(version).handle(resolved -> {
 			switch resolved {
 				case Success(data):
-					switcher.switchTo(data);
+					lix.switcher.switchTo(data);
 				case Failure(_):
 			}
 			return Noise;
@@ -121,7 +118,7 @@ class HaxeVersionSelector {
 	function installVersion(version:String, force:Bool) {
 		window.withProgress({location: Window, title: 'Installing Haxe $version...'}, function(_, _) {
 			return new js.lib.Promise((resolve, _) -> {
-				switcher.install(version, {force: false}).handle(_ -> resolve(null));
+				lix.switcher.install(version, {force: false}).handle(_ -> resolve(null));
 			});
 		});
 	}
