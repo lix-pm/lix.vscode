@@ -61,6 +61,11 @@ class HaxeVersionSelector {
 						}
 					case Failure(_):
 				}
+				for (item in items) {
+					if (item.label == lix.scope.haxeInstallation.version) {
+						item.description = "selected";
+					}
+				}
 				items.push({
 					label: "From directory...",
 					select: switchToDirectory
