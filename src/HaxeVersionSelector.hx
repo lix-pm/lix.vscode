@@ -88,7 +88,7 @@ class HaxeVersionSelector {
 		lix.switcher.resolveInstalled(version).handle(resolved -> {
 			switch resolved {
 				case Success(data):
-					lix.switcher.switchTo(data);
+					lix.switcher.switchTo(data).eager();
 				case Failure(_):
 			}
 			return Noise;
