@@ -15,7 +15,10 @@ class HaxeVersionSelector {
 		statusBarItem.command = LixCommand.SelectHaxeVersion;
 		context.subscriptions.push(statusBarItem);
 
-		window.onDidChangeActiveTextEditor(updateActiveEditor);
+		window.onDidChangeActiveTextEditor(editor -> {
+			updateActiveEditor(editor);
+			updateStatusBarItem();
+		});
 		lix.onDidChangeScope(_ -> updateStatusBarItem());
 
 		commands.registerCommand(LixCommand.SelectHaxeVersion, selectHaxeVersion);
@@ -29,7 +32,6 @@ class HaxeVersionSelector {
 			return; // ignore focusing the output channel "document"
 		}
 		this.activeEditor = activeEditor;
-		updateStatusBarItem();
 	}
 
 	function updateStatusBarItem() {
