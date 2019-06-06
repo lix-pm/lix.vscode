@@ -179,11 +179,7 @@ class HaxeVersionSelector {
 	}
 
 	function installVersion(version:String, force:Bool) {
-		window.withProgress({location: Window, title: 'Installing Haxe $version...'}, function(_, _) {
-			return new js.lib.Promise((resolve, _) -> {
-				lix.switcher.install(version, {force: false}).handle(_ -> resolve(null));
-			});
-		});
+		Util.withProgress('Installing Haxe $version...', lix.switcher.install(version, {force: false}));
 	}
 }
 

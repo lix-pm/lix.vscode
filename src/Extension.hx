@@ -30,5 +30,14 @@ class Extension {
 			terminal.show();
 			terminal.sendText("npm install lix --save-dev");
 		});
+
+		commands.registerCommand(LixCommand.DownloadMissingLibraries, function() {
+			var haxeVersion = lix.scope.config.version;
+			Util.withProgress('Downloading Haxe $haxeVersion...', lix.switcher.resolveOnline(haxeVersion).next(lix.switcher.download.bind(_, {force: false})))
+				.then(function(_) {
+					// TODO: report progress?
+					Util.withProgress('Downloading Libraries...', lix.scope.installLibs());
+				});
+		});
 	}
 }
