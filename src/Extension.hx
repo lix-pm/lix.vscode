@@ -13,6 +13,9 @@ class Extension {
 		var lix = new Lix(context, folder);
 		new HaxeVersionSelector(context, lix);
 
+		var vshaxe:Vshaxe = extensions.getExtension("nadako.vshaxe").exports;
+		vshaxe.registerHaxeInstallationProvider("lix", new HaxeInstallationProvider(folder, lix));
+
 		commands.registerCommand(LixCommand.InitializeProject, function() {
 			var path = folder.uri.fsPath;
 			Scope.create(path, {
