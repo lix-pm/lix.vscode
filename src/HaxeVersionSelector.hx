@@ -5,6 +5,7 @@ import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 class HaxeVersionSelector {
 	final lix:Lix;
 	final statusBarItem:StatusBarItem;
+	var activeEditor:Null<TextEditor>;
 
 	public function new(context, lix) {
 		this.lix = lix;
@@ -14,16 +15,24 @@ class HaxeVersionSelector {
 		statusBarItem.command = LixCommand.SelectHaxeVersion;
 		context.subscriptions.push(statusBarItem);
 
-		window.onDidChangeActiveTextEditor(_ -> updateStatusBarItem());
+		window.onDidChangeActiveTextEditor(updateActiveEditor);
 		lix.onDidChangeScope(_ -> updateStatusBarItem());
 
 		commands.registerCommand(LixCommand.SelectHaxeVersion, selectHaxeVersion);
 
+		updateActiveEditor(window.activeTextEditor);
+		updateStatusBarItem();
+	}
+
+	function updateActiveEditor(activeEditor:Null<TextEditor>) {
+		if (activeEditor != null && activeEditor.document.uri.scheme == "output") {
+			return; // ignore focusing the output channel "document"
+		}
+		this.activeEditor = activeEditor;
 		updateStatusBarItem();
 	}
 
 	function updateStatusBarItem() {
-		var activeEditor = window.activeTextEditor;
 		if (activeEditor == null || activeEditor.document.languageId != "haxe" || lix.scope.isGlobal) {
 			statusBarItem.hide();
 			return;
