@@ -11,9 +11,9 @@ class Extension {
 		var folder = folders[0];
 
 		var lix = new Lix(context, folder);
-		new HaxeVersionSelector(context, lix);
-
 		var vshaxe:Vshaxe = extensions.getExtension("nadako.vshaxe").exports;
+
+		new HaxeVersionSelector(context, lix, vshaxe);
 		vshaxe.registerHaxeInstallationProvider("lix", new HaxeInstallationProvider(folder, lix));
 
 		commands.registerCommand(LixCommand.InitializeProject, function() {

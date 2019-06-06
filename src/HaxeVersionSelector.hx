@@ -4,11 +4,13 @@ import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 
 class HaxeVersionSelector {
 	final lix:Lix;
+	final vshaxe:Vshaxe;
 	final statusBarItem:StatusBarItem;
 	var activeEditor:Null<TextEditor>;
 
-	public function new(context, lix) {
+	public function new(context, lix, vshaxe) {
 		this.lix = lix;
+		this.vshaxe = vshaxe;
 
 		statusBarItem = window.createStatusBarItem(Right, 11);
 		statusBarItem.tooltip = "Select Haxe Version";
@@ -20,6 +22,7 @@ class HaxeVersionSelector {
 			updateStatusBarItem();
 		});
 		lix.onDidChangeScope(_ -> updateStatusBarItem());
+		vshaxe.haxeExecutable.onDidChangeConfiguration(_ -> updateStatusBarItem());
 
 		commands.registerCommand(LixCommand.SelectHaxeVersion, selectHaxeVersion);
 
@@ -35,18 +38,27 @@ class HaxeVersionSelector {
 	}
 
 	function updateStatusBarItem() {
-		if (activeEditor == null || activeEditor.document.languageId != "haxe" || lix.scope.isGlobal) {
+		var isHaxeFile = activeEditor != null && activeEditor.document.languageId == "haxe";
+		if (!lix.scope.isGlobal && isHaxeFile && didProvideExecutable()) {
+			statusBarItem.text = lix.scope.haxeInstallation.version;
+			statusBarItem.show();
+		} else {
 			statusBarItem.hide();
-			return;
 		}
-		statusBarItem.text = lix.scope.haxeInstallation.version;
-		statusBarItem.show();
+	}
+
+	function didProvideExecutable() {
+		return vshaxe.haxeExecutable.configuration.source.match(Provider("lix"));
 	}
 
 	function selectHaxeVersion() {
 		if (lix.scope.isGlobal) {
 			// TODO: offer to create one
 			window.showErrorMessage("No .haxerc / local scope found.");
+			return;
+		}
+		if (!didProvideExecutable()) {
+			window.showErrorMessage('The Haxe executable is currently not controlled by lix. Maybe "haxe.executable" is not set to "auto"?');
 			return;
 		}
 		lix.switcher.officialInstalled(IncludePrereleases).handle(official -> {
