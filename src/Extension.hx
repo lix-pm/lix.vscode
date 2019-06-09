@@ -14,7 +14,25 @@ class Extension {
 		var vshaxe:Vshaxe = extensions.getExtension("nadako.vshaxe").exports;
 
 		new HaxeVersionSelector(context, lix, vshaxe);
-		vshaxe.registerHaxeInstallationProvider("lix", new HaxeInstallationProvider(folder, lix));
+
+		var provider = new HaxeInstallationProvider(folder, lix);
+		var providerDisposable:Disposable;
+
+		function updateHaxeInstallation() {
+			if (lix.scope.isGlobal) {
+				if (providerDisposable != null) {
+					providerDisposable.dispose();
+					providerDisposable = null;
+				}
+			} else {
+				if (providerDisposable == null) {
+					providerDisposable = vshaxe.registerHaxeInstallationProvider("lix", provider);
+				}
+			}
+		}
+		updateHaxeInstallation();
+
+		lix.onDidChangeScope(_ -> updateHaxeInstallation());
 
 		commands.registerCommand(LixCommand.InitializeProject, function() {
 			var path = folder.uri.fsPath;

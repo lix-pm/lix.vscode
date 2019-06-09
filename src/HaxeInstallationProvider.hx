@@ -33,5 +33,7 @@ class HaxeInstallationProvider {
 		});
 	}
 
-	public function deactivate() {}
+	public function deactivate() {
+		provideInstallation = null;
+	}
 }
