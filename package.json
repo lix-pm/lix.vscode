@@ -61,6 +61,11 @@
 				"category": "lix",
 				"command": "lix.downloadMissingLibraries",
 				"title": "Download Missing Libraries"
+			},
+			{
+				"category": "lix",
+				"command": "lix.installLibrary",
+				"title": "Install Library"
 			}
 		],
 		"languages": [

@@ -11,6 +11,7 @@ class Commands {
 
 		commands.registerCommand(LixCommand.InitializeProject, initializeProject);
 		commands.registerCommand(LixCommand.DownloadMissingLibraries, downloadMissingLibraries);
+		commands.registerCommand(LixCommand.InstallLibrary, installLibrary);
 	}
 
 	function initializeProject() {
@@ -35,5 +36,37 @@ class Commands {
 				// TODO: report progress?
 				Util.withProgress('Downloading Libraries...', lix.scope.installLibs());
 			});
+	}
+
+	function installLibrary() {
+		var schemes = [Haxelib, GitHub, GitLab, Http, Https].map(scheme -> ({label: scheme} : QuickPickItem));
+		window.showQuickPick(schemes, {placeHolder: "Select a scheme"}).then(function(pick) {
+			if (pick == null) {
+				return;
+			}
+			var scheme:Scheme = pick.label;
+			window.showInputBox({placeHolder: scheme.arguments()}).then(function(args) {
+				if (args != null) {
+					trace('$scheme:$args');
+				}
+			});
+		});
+	}
+}
+
+private enum abstract Scheme(String) from String to String {
+	var Haxelib = "haxelib";
+	var GitHub = "github";
+	var GitLab = "gitlab";
+	var Http = "http";
+	var Https = "https";
+
+	public function arguments():String {
+		return switch this {
+			case Haxelib: "<name>[#<version>]";
+			case GitHub | GitLab: "<owner>/<repo>[#<branch|tag|sha>]";
+			case Http | Https: "<url>";
+			case _: throw "wat";
+		}
 	}
 }

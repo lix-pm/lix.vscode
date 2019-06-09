@@ -3,4 +3,5 @@ enum abstract LixCommand(String) to String {
 	var CreateScope = "lix.createScope";
 	var InitializeProject = "lix.initializeProject";
 	var DownloadMissingLibraries = "lix.downloadMissingLibraries";
+	var InstallLibrary = "lix.installLibrary";
 }

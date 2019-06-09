@@ -10,8 +10,8 @@ class Extension {
 		var lix = new Lix(context, folder);
 		var vshaxe:Vshaxe = extensions.getExtension("nadako.vshaxe").exports;
 
-		new HaxeVersionSelector(context, lix, vshaxe);
 		new Commands(folder, lix);
+		new HaxeVersionSelector(context, lix, vshaxe);
 		new HaxeInstallationProvider(folder, lix, vshaxe);
 	}
 }
