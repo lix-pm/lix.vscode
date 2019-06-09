@@ -1,0 +1,8 @@
+-lib json2object
+-lib haxeshim
+-lib hxnodejs
+-cp schemas
+-D no-deprecation-warnings
+-main SchemaGenerator
+-js bin/schema.js
+-cmd node bin/schema.js
