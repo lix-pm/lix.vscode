@@ -1,6 +1,3 @@
-import sys.io.File;
-import sys.FileSystem;
-
 class Extension {
 	@:expose("activate")
 	static function activate(context:ExtensionContext) {
@@ -14,6 +11,7 @@ class Extension {
 		var vshaxe:Vshaxe = extensions.getExtension("nadako.vshaxe").exports;
 
 		new HaxeVersionSelector(context, lix, vshaxe);
+		new Commands(folder, lix);
 
 		var provider = new HaxeInstallationProvider(folder, lix);
 		var providerDisposable:Disposable;
@@ -33,29 +31,5 @@ class Extension {
 		updateHaxeInstallation();
 
 		lix.onDidChangeScope(_ -> updateHaxeInstallation());
-
-		commands.registerCommand(LixCommand.InitializeProject, function() {
-			var path = folder.uri.fsPath;
-			Scope.create(path, {
-				version: "latest",
-				resolveLibs: Scoped
-			});
-			var packageJson = '$path/package.json';
-			if (!FileSystem.exists(packageJson)) {
-				File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
-			}
-			var terminal = window.createTerminal();
-			terminal.show();
-			terminal.sendText("npm install lix --save-dev");
-		});
-
-		commands.registerCommand(LixCommand.DownloadMissingLibraries, function() {
-			var haxeVersion = lix.scope.config.version;
-			Util.withProgress('Downloading Haxe $haxeVersion...', lix.switcher.resolveOnline(haxeVersion).next(lix.switcher.download.bind(_, {force: false})))
-				.then(function(_) {
-					// TODO: report progress?
-					Util.withProgress('Downloading Libraries...', lix.scope.installLibs());
-				});
-		});
 	}
 }
