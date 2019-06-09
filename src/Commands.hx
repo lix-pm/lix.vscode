@@ -8,6 +8,7 @@ class Commands {
 	final folder:WorkspaceFolder;
 	final lix:Lix;
 	final installation:HaxeInstallationProvider;
+	var libs:Array<QuickPickItem>;
 
 	public function new(folder, lix, installation) {
 		this.folder = folder;
@@ -62,7 +63,9 @@ class Commands {
 				}
 
 				if (scheme == Haxelib) {
-					var libs = toQuickPickItems(getHaxelibs());
+					if (libs == null) {
+						libs = toQuickPickItems(getHaxelibs());
+					}
 					if (libs == null) {
 						window.showInputBox(options)
 							.then(handleArgs);
