@@ -1,5 +1,6 @@
 import sys.io.File;
 import sys.FileSystem;
+import lix.cli.Cli;
 
 class Commands {
 	final folder:WorkspaceFolder;
@@ -46,9 +47,12 @@ class Commands {
 			}
 			var scheme:Scheme = pick.label;
 			window.showInputBox({placeHolder: scheme.arguments()}).then(function(args) {
-				if (args != null) {
-					trace('$scheme:$args');
+				if (args == null) {
+					return;
 				}
+				// TODO: report progress + errors
+				Sys.setCwd(folder.uri.fsPath);
+				@:privateAccess Cli.dispatch(["install", '$scheme:$args']);
 			});
 		});
 	}

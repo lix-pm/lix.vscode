@@ -1,5 +1,6 @@
 -lib vscode
 -lib lix
+-lib hx3compat
 -cp src
 -js bin/extension.js
 -D no-deprecation-warnings
