@@ -1,3 +1,5 @@
+import js.node.Buffer;
+import js.node.ChildProcess;
 import sys.io.File;
 import sys.FileSystem;
 import lix.cli.Cli;
@@ -5,10 +7,12 @@ import lix.cli.Cli;
 class Commands {
 	final folder:WorkspaceFolder;
 	final lix:Lix;
+	final installation:HaxeInstallationProvider;
 
-	public function new(folder, lix) {
+	public function new(folder, lix, installation) {
 		this.folder = folder;
 		this.lix = lix;
+		this.installation = installation;
 
 		commands.registerCommand(LixCommand.InitializeProject, initializeProject);
 		commands.registerCommand(LixCommand.DownloadMissingLibraries, downloadMissingLibraries);
@@ -40,21 +44,62 @@ class Commands {
 	}
 
 	function installLibrary() {
-		var schemes = [Haxelib, GitHub, GitLab, Http, Https].map(scheme -> ({label: scheme} : QuickPickItem));
-		window.showQuickPick(schemes, {placeHolder: "Select a scheme"}).then(function(pick) {
-			if (pick == null) {
-				return;
-			}
-			var scheme:Scheme = pick.label;
-			window.showInputBox({placeHolder: scheme.arguments()}).then(function(args) {
-				if (args == null) {
+		var schemes = toQuickPickItems([Haxelib, GitHub, GitLab, Http, Https]);
+		window.showQuickPick(schemes, {placeHolder: "Select a scheme"})
+			.then(function(pick) {
+				if (pick == null) {
 					return;
 				}
-				// TODO: report progress + errors
-				Sys.setCwd(folder.uri.fsPath);
-				@:privateAccess Cli.dispatch(["install", '$scheme:$args']);
+				var scheme:Scheme = pick.label;
+				var options = {placeHolder: scheme.arguments()};
+				function handleArgs(args) {
+					if (args == null) {
+						return;
+					}
+					// TODO: report progress + errors
+					Sys.setCwd(folder.uri.fsPath);
+					@:privateAccess Cli.dispatch(["install", '$scheme:$args']);
+				}
+
+				if (scheme == Haxelib) {
+					var libs = toQuickPickItems(getHaxelibs());
+					if (libs == null) {
+						window.showInputBox(options)
+							.then(handleArgs);
+					} else {
+						window.showQuickPick(libs, options)
+							.then(item -> {
+								if (item != null) {
+									handleArgs(item.label);
+								}
+							});
+					}
+				} else {
+					window.showInputBox(options)
+						.then(handleArgs);
+				}
 			});
-		});
+	}
+
+	function getHaxelibs():Null<Array<String>> {
+		var haxelib = installation.installation.haxelibExecutable;
+		if (haxelib == null) {
+			return null;
+		}
+		try {
+			var result:Buffer = ChildProcess.execSync('$haxelib search ""', {cwd: folder.uri.fsPath});
+			var libs = result.toString().split("\n");
+			libs.pop(); // empty line
+			libs.pop(); // "n libraries found"
+			libs.sort(Reflect.compare);
+			return libs;
+		} catch (_:Any) {
+			return null;
+		}
+	}
+
+	function toQuickPickItems(a:Array<String>):Array<QuickPickItem> {
+		return a.map(s -> ({label: s} : QuickPickItem));
 	}
 }
 

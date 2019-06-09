@@ -2,6 +2,8 @@ import sys.FileSystem;
 import vshaxe.HaxeInstallation;
 
 class HaxeInstallationProvider {
+	public var installation(default, null):HaxeInstallation = {};
+
 	final folder:WorkspaceFolder;
 	final lix:Lix;
 	final vshaxe:Vshaxe;
@@ -33,12 +35,13 @@ class HaxeInstallationProvider {
 		var haxeExecutable = if (isWindows) "node_modules\\.bin\\haxe.cmd" else "node_modules/.bin/haxe";
 		var haxelibExecutable = if (isWindows) "node_modules\\.bin\\haxelib.cmd" else "node_modules/.bin/haxelib";
 		var cwd = folder.uri.fsPath;
-		provideInstallation({
+		installation = {
 			haxeExecutable: if (FileSystem.exists('$cwd/$haxeExecutable')) haxeExecutable else null,
 			haxelibExecutable: if (FileSystem.exists('$cwd/$haxelibExecutable')) haxelibExecutable else null,
 			standardLibraryPath: lix.scope.haxeInstallation.stdLib,
 			libraryBasePath: lix.scope.libCache
-		});
+		}
+		provideInstallation(installation);
 	}
 
 	public function deactivate() {
