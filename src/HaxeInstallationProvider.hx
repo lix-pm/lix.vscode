@@ -4,20 +4,28 @@ import vshaxe.HaxeInstallation;
 class HaxeInstallationProvider {
 	final folder:WorkspaceFolder;
 	final lix:Lix;
+	final vshaxe:Vshaxe;
 	var provideInstallation:HaxeInstallation->Void;
+	var disposable:Disposable;
 
-	public function new(folder, lix) {
+	public function new(folder, lix, vshaxe) {
 		this.folder = folder;
 		this.lix = lix;
-		lix.onDidChangeScope(_ -> update());
+		this.vshaxe = vshaxe;
+
+		lix.onDidChangeScope(function(_) {
+			updateInstallation();
+			updateRegistration();
+		});
+		updateRegistration();
 	}
 
 	public function activate(provideInstallation:HaxeInstallation->Void) {
 		this.provideInstallation = provideInstallation;
-		update();
+		updateInstallation();
 	}
 
-	function update() {
+	function updateInstallation() {
 		if (provideInstallation == null) {
 			return;
 		}
@@ -35,5 +43,18 @@ class HaxeInstallationProvider {
 
 	public function deactivate() {
 		provideInstallation = null;
+	}
+
+	function updateRegistration() {
+		if (lix.scope.isGlobal) {
+			if (disposable != null) {
+				disposable.dispose();
+				disposable = null;
+			}
+		} else {
+			if (disposable == null) {
+				disposable = vshaxe.registerHaxeInstallationProvider("lix", this);
+			}
+		}
 	}
 }
