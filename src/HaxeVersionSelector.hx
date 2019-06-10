@@ -119,30 +119,26 @@ class HaxeVersionSelector {
 	}
 
 	function switchToDirectory() {
-		window.showOpenDialog({canSelectFiles: false, canSelectFolders: true})
-			.then(function(uris) {
-				if (uris != null && uris.length > 0) {
-					var path = uris[0].fsPath;
-					var isWindows = Sys.systemName() == "Windows";
-					if (isWindows) {
-						// c: -> C:
-						path = path.substr(0, 1)
-							.toUpperCase() + path.substr(1);
-					}
-					var haxe = '$path/haxe' + (if (isWindows) ".exe" else "");
-					if (FileSystem.exists(haxe)) {
-						lix.switcher.switchTo(RCustom(path))
-							.eager();
-					} else {
-						window.showErrorMessage('"$haxe" does not exist', "Retry", "Close")
-							.then(choice -> {
-								if (choice == "Retry") {
-									switchToDirectory();
-								}
-							});
-					}
+		window.showOpenDialog({canSelectFiles: false, canSelectFolders: true}).then(function(uris) {
+			if (uris != null && uris.length > 0) {
+				var path = uris[0].fsPath;
+				var isWindows = Sys.systemName() == "Windows";
+				if (isWindows) {
+					// c: -> C:
+					path = path.substr(0, 1).toUpperCase() + path.substr(1);
 				}
-			});
+				var haxe = '$path/haxe' + (if (isWindows) ".exe" else "");
+				if (FileSystem.exists(haxe)) {
+					lix.switcher.switchTo(RCustom(path)).eager();
+				} else {
+					window.showErrorMessage('"$haxe" does not exist', "Retry", "Close").then(choice -> {
+						if (choice == "Retry") {
+							switchToDirectory();
+						}
+					});
+				}
+			}
+		});
 	}
 
 	function installAnotherVersion(installed:Array<String>) {

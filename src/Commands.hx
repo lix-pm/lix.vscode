@@ -46,42 +46,38 @@ class Commands {
 
 	function installLibrary() {
 		var schemes = toQuickPickItems([Haxelib, GitHub, GitLab, Http, Https]);
-		window.showQuickPick(schemes, {placeHolder: "Select a scheme"})
-			.then(function(pick) {
-				if (pick == null) {
+		window.showQuickPick(schemes, {placeHolder: "Select a scheme"}).then(function(pick) {
+			if (pick == null) {
+				return;
+			}
+			var scheme:Scheme = pick.label;
+			var options = {placeHolder: scheme.arguments()};
+			function handleArgs(args) {
+				if (args == null) {
 					return;
 				}
-				var scheme:Scheme = pick.label;
-				var options = {placeHolder: scheme.arguments()};
-				function handleArgs(args) {
-					if (args == null) {
-						return;
-					}
-					// TODO: report progress + errors
-					Sys.setCwd(folder.uri.fsPath);
-					@:privateAccess Cli.dispatch(["install", '$scheme:$args']);
-				}
+				// TODO: report progress + errors
+				Sys.setCwd(folder.uri.fsPath);
+				@:privateAccess Cli.dispatch(["install", '$scheme:$args']);
+			}
 
-				if (scheme == Haxelib) {
-					if (libs == null) {
-						libs = toQuickPickItems(getHaxelibs());
-					}
-					if (libs == null) {
-						window.showInputBox(options)
-							.then(handleArgs);
-					} else {
-						window.showQuickPick(libs, options)
-							.then(item -> {
-								if (item != null) {
-									handleArgs(item.label);
-								}
-							});
-					}
-				} else {
-					window.showInputBox(options)
-						.then(handleArgs);
+			if (scheme == Haxelib) {
+				if (libs == null) {
+					libs = toQuickPickItems(getHaxelibs());
 				}
-			});
+				if (libs == null) {
+					window.showInputBox(options).then(handleArgs);
+				} else {
+					window.showQuickPick(libs, options).then(item -> {
+						if (item != null) {
+							handleArgs(item.label);
+						}
+					});
+				}
+			} else {
+				window.showInputBox(options).then(handleArgs);
+			}
+		});
 	}
 
 	function getHaxelibs():Null<Array<String>> {
