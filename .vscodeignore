@@ -2,4 +2,7 @@
 */**
 !bin/extension.js
 !icon.png
+!CHANGELOG.md
+!LICENSE.md
 !package.json
+!README.md

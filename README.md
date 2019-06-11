@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/lix-pm/lix.vscode.svg?branch=master)](https://travis-ci.org/lix-pm/lix.vscode)
