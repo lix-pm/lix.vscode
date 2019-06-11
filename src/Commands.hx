@@ -36,12 +36,7 @@ class Commands {
 	}
 
 	function downloadMissingLibraries() {
-		var haxeVersion = lix.scope.config.version;
-		Util.withProgress('Downloading Haxe $haxeVersion...', lix.switcher.resolveOnline(haxeVersion).next(lix.switcher.download.bind(_, {force: false})))
-			.then(function(_) {
-				// TODO: report progress?
-				Util.withProgress('Downloading Libraries...', lix.scope.installLibs());
-			});
+		lix.run(["download"]);
 	}
 
 	function installLibrary() {
@@ -53,12 +48,9 @@ class Commands {
 			var scheme:Scheme = pick.label;
 			var options = {placeHolder: scheme.arguments()};
 			function handleArgs(args) {
-				if (args == null) {
-					return;
+				if (args != null) {
+					lix.run(["install", '$scheme:$args']);
 				}
-				// TODO: report progress + errors
-				Sys.setCwd(folder.uri.fsPath);
-				@:privateAccess Cli.dispatch(["install", '$scheme:$args']);
 			}
 
 			if (scheme == Haxelib) {
