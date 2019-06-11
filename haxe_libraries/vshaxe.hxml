@@ -1,4 +1,4 @@
 -D vshaxe=2.13.0
-# @install: lix --silent download "gh://github.com/vshaxe/vshaxe#df9e4503fa6e6aea8f00aa2a7a310a7d61de44c6" into vshaxe/2.13.0/github/df9e4503fa6e6aea8f00aa2a7a310a7d61de44c6
+# @install: lix --silent download "gh://github.com/vshaxe/vshaxe#9b752a8ac39cafb83828c00fedb171cb411dd09d" into vshaxe/2.13.0/github/9b752a8ac39cafb83828c00fedb171cb411dd09d
 -lib vscode
--cp ${HAXE_LIBCACHE}/vshaxe/2.13.0/github/df9e4503fa6e6aea8f00aa2a7a310a7d61de44c6/haxelib/src
+-cp ${HAXE_LIBCACHE}/vshaxe/2.13.0/github/9b752a8ac39cafb83828c00fedb171cb411dd09d/haxelib/src

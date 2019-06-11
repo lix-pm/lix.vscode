@@ -1,7 +1,10 @@
+import haxe.io.Path;
 import sys.FileSystem;
+import vshaxe.Library;
 import vshaxe.HaxeInstallation;
 
 class HaxeInstallationProvider {
+	public var resolveLibrary:(classpath:String) -> Null<Library>;
 	public var installation(default, null):HaxeInstallation = {};
 
 	final folder:WorkspaceFolder;
@@ -14,6 +17,7 @@ class HaxeInstallationProvider {
 		this.folder = folder;
 		this.lix = lix;
 		this.vshaxe = vshaxe;
+		this.resolveLibrary = resolveLibraryImpl;
 
 		lix.onDidChangeScope(function(_) {
 			updateInstallation();
@@ -59,5 +63,29 @@ class HaxeInstallationProvider {
 				disposable = vshaxe.registerHaxeInstallationProvider("lix", this);
 			}
 		}
+	}
+
+	function resolveLibraryImpl(classpath:String):Null<Library> {
+		classpath = Path.normalize(classpath);
+		var libCache = Path.addTrailingSlash(Path.normalize(lix.scope.libCache));
+		if (!classpath.startsWith(libCache)) {
+			return null;
+		}
+		var parts = classpath.replace(libCache, "").split("/");
+		var name = parts[0];
+		var version = parts[1];
+		var scheme = parts[2];
+
+		var path = Path.join([libCache, name, version, scheme]);
+		if (scheme == "github" || scheme == "gitlab") {
+			var shortenedSha = parts[3].substr(0, 7);
+			version = if (version == "0.0.0") shortenedSha else '$version, $shortenedSha';
+			path = Path.join([path, parts[3]]);
+		}
+		return {
+			name: name,
+			version: version,
+			path: path
+		};
 	}
 }
