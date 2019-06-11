@@ -2,7 +2,6 @@ import js.node.Buffer;
 import js.node.ChildProcess;
 import sys.io.File;
 import sys.FileSystem;
-import lix.cli.Cli;
 
 class Commands {
 	final folder:WorkspaceFolder;
@@ -82,7 +81,7 @@ class Commands {
 			var libs = result.toString().split("\n").map(StringTools.trim);
 			libs.pop(); // empty line
 			libs.pop(); // "n libraries found"
-			libs.sort(Reflect.compare);
+			libs.sort((a, b) -> Reflect.compare(a.toLowerCase(), b.toLowerCase()));
 			return libs;
 		} catch (_:Any) {
 			return null;
