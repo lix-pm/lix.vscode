@@ -49,8 +49,8 @@ class Lix {
 
 	public function run(command:Array<String>) {
 		var commandString = 'lix ${command.join(" ")}';
-		Util.withProgress('lix $commandString...', new Promise(function(resolve, reject) {
-			trace('> npx lix $commandString');
+		Util.withProgress('$commandString...', new Promise(function(resolve, reject) {
+			trace('> npx $commandString');
 			var childProcess = ChildProcess.spawn("npx", ["lix"].concat(command), {cwd: folder.uri.fsPath, shell: true});
 			function print(buffer:Buffer) {
 				var s = buffer.toString().trim();
