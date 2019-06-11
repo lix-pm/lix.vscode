@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "10"
+dist: xenial
+
+install:
+  - npm install
+
+script:
+  - npx haxe build.hxml
+  - npx haxe schema.hxml
