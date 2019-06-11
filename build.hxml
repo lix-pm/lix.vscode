@@ -6,6 +6,8 @@
 -D no-deprecation-warnings
 -D analyzer-optimize
 -D js-es=6
+-dce full
 -debug
 Extension
 -cp C:\Users\Jens\.vscode\extensions\vshaxe\haxelib\src
+-cmd npx webpack --mode production --silent

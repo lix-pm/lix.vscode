@@ -1,5 +1,5 @@
-.vscode
-bin/*.map
-src
-node_modules
-build.hxml
+*
+*/**
+!bin/extension.js
+!icon.png
+!package.json
