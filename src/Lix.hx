@@ -40,7 +40,7 @@ class Lix {
 		if (scope.isGlobal) {
 			outputChannel.hide();
 		} else {
-			outputChannel.show();
+			outputChannel.show(true);
 		}
 
 		// TOOD: check if there were actually any changes?
@@ -48,8 +48,9 @@ class Lix {
 	}
 
 	public function run(command:Array<String>) {
-		Util.withProgress('lix ${command.join(" ")}...', new Promise(function(resolve, reject) {
-			trace('> npx lix ${command.join(" ")}');
+		var commandString = 'lix ${command.join(" ")}';
+		Util.withProgress('lix $commandString...', new Promise(function(resolve, reject) {
+			trace('> npx lix $commandString');
 			var childProcess = ChildProcess.spawn("npx", ["lix"].concat(command), {cwd: folder.uri.fsPath, shell: true});
 			function print(buffer:Buffer) {
 				var s = buffer.toString().trim();
@@ -62,6 +63,13 @@ class Lix {
 			childProcess.on(ChildProcessEvent.Exit, (code, _) -> {
 				resolve(Noise);
 				trace('Exited with $code.');
+				if (code != 0) {
+					window.showErrorMessage('"$commandString" failed with exit code $code', "Show Output", "Close").then(function(choice) {
+						if (choice != null && choice == "Show Output") {
+							outputChannel.show();
+						}
+					});
+				}
 			});
 		}, true));
 	}
