@@ -42,8 +42,7 @@ class HaxeInstallationProvider {
 		installation = {
 			haxeExecutable: if (FileSystem.exists('$cwd/$haxeExecutable')) haxeExecutable else null,
 			haxelibExecutable: if (FileSystem.exists('$cwd/$haxelibExecutable')) haxelibExecutable else null,
-			standardLibraryPath: lix.scope.haxeInstallation.stdLib,
-			libraryBasePath: lix.scope.libCache
+			standardLibraryPath: lix.scope.haxeInstallation.stdLib
 		}
 		provideInstallation(installation);
 	}
