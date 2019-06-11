@@ -1,4 +1,4 @@
--lib vscode
+-lib vshaxe
 -lib lix
 -lib hx3compat
 -cp src
@@ -9,5 +9,4 @@
 -dce full
 -debug
 Extension
--cp C:\Users\Jens\.vscode\extensions\vshaxe\haxelib\src
 -cmd npx webpack --mode production --silent
