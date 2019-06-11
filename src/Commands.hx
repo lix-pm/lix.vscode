@@ -87,7 +87,7 @@ class Commands {
 		}
 		try {
 			var result:Buffer = ChildProcess.execSync('$haxelib search ""', {cwd: folder.uri.fsPath});
-			var libs = result.toString().split("\n");
+			var libs = result.toString().split("\n").map(StringTools.trim);
 			libs.pop(); // empty line
 			libs.pop(); // "n libraries found"
 			libs.sort(Reflect.compare);
