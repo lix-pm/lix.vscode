@@ -25,7 +25,7 @@
 	"keywords": [
 		"haxe"
 	],
-	"icon": "icon.png",
+	"icon": "images/icon.png",
 	"license": "MIT",
 	"bugs": "https://github.com/lix-pm/lix.vscode/issues",
 	"homepage": "https://github.com/lix-pm/lix.vscode/blob/master/README.md",
@@ -68,7 +68,11 @@
 			{
 				"category": "lix",
 				"command": "lix.installLibrary",
-				"title": "Install Library"
+				"title": "Install Library",
+				"icon": {
+					"dark": "images/dark/AddFolder.svg",
+					"light": "images/light/AddFolder.svg"
+				}
 			}
 		],
 		"languages": [
@@ -84,6 +88,15 @@
 				"fileMatch": ".haxerc",
 				"url": "./schemas/.haxerc.schema.json"
 			}
-		]
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "lix.installLibrary",
+					"when": "view == haxe.dependencies && lixActive",
+					"group": "navigation@0"
+				}
+			]
+		}
 	}
 }

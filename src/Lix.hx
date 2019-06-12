@@ -53,6 +53,8 @@ class Lix {
 			}
 		}
 
+		commands.executeCommand("setContext", "lixActive", !scope.isGlobal);
+
 		// TOOD: check if there were actually any changes?
 		_onDidChangeScope.fire();
 	}

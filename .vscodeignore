@@ -1,7 +1,7 @@
 *
 */**
 !bin/extension.js
-!icon.png
+!images/**
 !CHANGELOG.md
 !LICENSE.md
 !package.json
