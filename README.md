@@ -41,7 +41,7 @@ Click the "Install Library" button in the Haxe Dependencies view or run `lix: In
 
 ### Haxe Installation Auto-Detection
 
-If the `"haxe.executable"` and `"haxelib.executable"` settings are at their default values `"auto"`, they are automatically resolved to the local `haxe` / `haxelib` scripts in `node_modules/.bin` needed by lix.
+If the `"haxe.executable"` and `"haxelib.executable"` settings are at their default values `"auto"`, they are automatically resolved to the local `haxe` / `haxelib` scripts in `node_modules/.bin` provided by lix.
 
 ### Haxe Dependencies Support
 
@@ -59,7 +59,7 @@ This extension adds JSON syntax highlighting as well as hover hints and completi
 
 ![](images/readme/haxerc-support.png)
 
-### lix Output Channel
+### Output Channel
 
 To troubleshoot issues with the extension, open the lix output channel to view the output of commands that have been executed:
 

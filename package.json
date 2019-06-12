@@ -25,6 +25,10 @@
 	"keywords": [
 		"haxe"
 	],
+	"galleryBanner": {
+		"theme": "dark",
+		"color": "#009cb5"
+	},
 	"icon": "images/icon.png",
 	"license": "MIT",
 	"bugs": "https://github.com/lix-pm/lix.vscode/issues",
