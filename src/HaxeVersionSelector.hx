@@ -24,8 +24,6 @@ class HaxeVersionSelector {
 		lix.onDidChangeScope(_ -> updateStatusBarItem());
 		vshaxe.haxeExecutable.onDidChangeConfiguration(_ -> updateStatusBarItem());
 
-		commands.registerCommand(LixCommand.SelectHaxeVersion, selectHaxeVersion);
-
 		updateActiveEditor(window.activeTextEditor);
 		updateStatusBarItem();
 	}
@@ -51,16 +49,7 @@ class HaxeVersionSelector {
 		return vshaxe.haxeExecutable.configuration.source.match(Provider("lix"));
 	}
 
-	function selectHaxeVersion() {
-		if (lix.scope.isGlobal) {
-			var InitializeProject = "Initialize Project";
-			window.showErrorMessage("No .haxerc / local scope found.", InitializeProject, "Close").then(function(pick) {
-				if (pick == InitializeProject) {
-					commands.executeCommand(LixCommand.InitializeProject);
-				}
-			});
-			return;
-		}
+	public function selectHaxeVersion() {
 		if (!didProvideExecutable()) {
 			window.showErrorMessage('The Haxe executable is currently not controlled by lix. Maybe "haxe.executable" is not set to "auto"?');
 			return;

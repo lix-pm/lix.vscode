@@ -6,14 +6,15 @@ class Commands {
 	final lix:Lix;
 	final haxelib:Haxelib;
 
-	public function new(folder, lix, haxelib) {
+	public function new(folder, lix, haxelib, selector) {
 		this.folder = folder;
 		this.lix = lix;
 		this.haxelib = haxelib;
 
 		commands.registerCommand(LixCommand.InitializeProject, initializeProject);
-		commands.registerCommand(LixCommand.DownloadMissingDependencies, downloadMissingDependencies);
-		commands.registerCommand(LixCommand.InstallLibrary, installLibrary);
+		commands.registerCommand(LixCommand.DownloadMissingDependencies, ensureScope(downloadMissingDependencies));
+		commands.registerCommand(LixCommand.InstallLibrary, ensureScope(installLibrary));
+		commands.registerCommand(LixCommand.SelectHaxeVersion, ensureScope(selector.selectHaxeVersion));
 	}
 
 	function initializeProject() {
@@ -29,6 +30,21 @@ class Commands {
 		var terminal = window.createTerminal();
 		terminal.show();
 		terminal.sendText("npm install lix --save-dev");
+	}
+
+	function ensureScope(f:() -> Void) {
+		return function() {
+			if (lix.scope.isGlobal) {
+				var InitializeProject = "Initialize Project";
+				window.showErrorMessage("No .haxerc / local scope found.", InitializeProject, "Close").then(function(pick) {
+					if (pick == InitializeProject) {
+						initializeProject();
+					}
+				});
+			} else {
+				f();
+			}
+		}
 	}
 
 	function downloadMissingDependencies() {

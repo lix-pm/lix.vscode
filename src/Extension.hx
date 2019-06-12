@@ -11,7 +11,7 @@ class Extension {
 		var vshaxe:Vshaxe = extensions.getExtension("nadako.vshaxe").exports;
 		var installation = new HaxeInstallationProvider(folder, lix, vshaxe);
 		var haxelib = new Haxelib(folder, installation);
-		new Commands(folder, lix, haxelib);
-		new HaxeVersionSelector(context, lix, vshaxe);
+		var selector = new HaxeVersionSelector(context, lix, vshaxe);
+		new Commands(folder, lix, haxelib, selector);
 	}
 }
