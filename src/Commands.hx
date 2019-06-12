@@ -21,7 +21,7 @@ class Commands {
 		Scope.create(path, {
 			version: "latest",
 			resolveLibs: Scoped
-		});
+		}).eager();
 		var packageJson = '$path/package.json';
 		if (!FileSystem.exists(packageJson)) {
 			File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
