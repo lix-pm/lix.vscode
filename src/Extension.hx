@@ -9,9 +9,9 @@ class Extension {
 
 		var lix = new Lix(context, folder);
 		var vshaxe:Vshaxe = extensions.getExtension("nadako.vshaxe").exports;
-
 		var installation = new HaxeInstallationProvider(folder, lix, vshaxe);
-		new Commands(folder, lix, installation);
+		var haxelib = new Haxelib(folder, installation);
+		new Commands(folder, lix, haxelib);
 		new HaxeVersionSelector(context, lix, vshaxe);
 	}
 }

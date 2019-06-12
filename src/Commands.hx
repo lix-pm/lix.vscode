@@ -1,18 +1,15 @@
-import js.node.Buffer;
-import js.node.ChildProcess;
 import sys.io.File;
 import sys.FileSystem;
 
 class Commands {
 	final folder:WorkspaceFolder;
 	final lix:Lix;
-	final installation:HaxeInstallationProvider;
-	var libs:Array<QuickPickItem>;
+	final haxelib:Haxelib;
 
-	public function new(folder, lix, installation) {
+	public function new(folder, lix, haxelib) {
 		this.folder = folder;
 		this.lix = lix;
-		this.installation = installation;
+		this.haxelib = haxelib;
 
 		commands.registerCommand(LixCommand.InitializeProject, initializeProject);
 		commands.registerCommand(LixCommand.DownloadMissingLibraries, downloadMissingLibraries);
@@ -53,9 +50,7 @@ class Commands {
 			}
 
 			if (scheme == Haxelib) {
-				if (libs == null) {
-					libs = toQuickPickItems(getHaxelibs());
-				}
+				var libs = toQuickPickItems(haxelib.getLibraries());
 				if (libs == null) {
 					window.showInputBox(options).then(handleArgs);
 				} else {
@@ -69,23 +64,6 @@ class Commands {
 				window.showInputBox(options).then(handleArgs);
 			}
 		});
-	}
-
-	function getHaxelibs():Null<Array<String>> {
-		var haxelib = installation.installation.haxelibExecutable;
-		if (haxelib == null) {
-			return null;
-		}
-		try {
-			var result:Buffer = ChildProcess.execSync('$haxelib search ""', {cwd: folder.uri.fsPath});
-			var libs = result.toString().split("\n").map(StringTools.trim);
-			libs.pop(); // empty line
-			libs.pop(); // "n libraries found"
-			libs.sort((a, b) -> Reflect.compare(a.toLowerCase(), b.toLowerCase()));
-			return libs;
-		} catch (_:Any) {
-			return null;
-		}
 	}
 
 	function toQuickPickItems(a:Array<String>):Array<QuickPickItem> {
