@@ -6,7 +6,7 @@ class Commands {
 	final lix:Lix;
 	final haxelib:Haxelib;
 
-	public function new(folder, lix, haxelib, selector) {
+	public function new(folder, lix, haxelib, selector:HaxeVersionSelector) {
 		this.folder = folder;
 		this.lix = lix;
 		this.haxelib = haxelib;
