@@ -37,7 +37,7 @@ class Commands {
 
 	function installLibrary() {
 		var schemes = toQuickPickItems([Haxelib, GitHub, GitLab, Http, Https]);
-		window.showQuickPick(schemes, {placeHolder: "Select a scheme"}).then(function(pick) {
+		window.showQuickPick(schemes, {placeHolder: "Select Scheme"}).then(function(pick) {
 			if (pick == null) {
 				return;
 			}
@@ -54,9 +54,24 @@ class Commands {
 				if (libs == null) {
 					window.showInputBox(options).then(handleArgs);
 				} else {
-					window.showQuickPick(libs, options).then(item -> {
-						if (item != null) {
-							handleArgs(item.label);
+					window.showQuickPick(libs, {placeHolder: "Select Library"}).then(function(pick) {
+						if (pick == null) {
+							return;
+						}
+						var library = pick.label;
+						var releases = haxelib.getReleases(library);
+						if (releases != null) {
+							var releaseItems = releases.map(release -> ({
+								label: release.version,
+								description: release.date + " - " + release.releaseNotes
+							} : QuickPickItem));
+							window.showQuickPick(releaseItems, {placeHolder: "Select Version"}).then(function(pick) {
+								if (pick != null) {
+									handleArgs('$library#${pick.label}');
+								}
+							});
+						} else {
+							handleArgs(library);
 						}
 					});
 				}
