@@ -91,7 +91,7 @@ class HaxeVersionSelector {
 					select: installAnotherVersion.bind(items.map(item -> item.label))
 				});
 
-				showSelectableQuickPick(items, "Select an installed Haxe version to switch to");
+				showSelectableQuickPick(items, "Select an Installed Haxe Version to Switch to");
 			});
 		});
 	}
@@ -163,7 +163,7 @@ class HaxeVersionSelector {
 					}
 				case Failure(_):
 			}
-			showSelectableQuickPick(items, "Select version to download and switch to");
+			showSelectableQuickPick(items, "Select Version to Download and Switch to");
 		});
 	}
 
