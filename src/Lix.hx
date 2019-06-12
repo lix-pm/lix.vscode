@@ -10,7 +10,7 @@ class Lix {
 	public var switcher(default, null):Switcher;
 	public var onDidChangeScope(get, never):Event<Void>;
 
-	final outputChannel:OutputChannel;
+	var outputChannel:Null<OutputChannel>;
 	final folder:WorkspaceFolder;
 	final _onDidChangeScope = new EventEmitter<Void>();
 
@@ -20,8 +20,7 @@ class Lix {
 	public function new(context, folder) {
 		this.folder = folder;
 
-		outputChannel = window.createOutputChannel("lix");
-		haxe.Log.trace = (v, ?infos) -> outputChannel.appendLine(Std.string(v));
+		haxe.Log.trace = (v, ?infos) -> appendToOutputChannel(Std.string(v));
 
 		var watcher = workspace.createFileSystemWatcher(new RelativePattern(folder, ".haxerc"));
 		watcher.onDidChange(_ -> update());
@@ -32,15 +31,26 @@ class Lix {
 		update();
 	}
 
+	function appendToOutputChannel(line:String) {
+		if (outputChannel != null) {
+			outputChannel.appendLine(line);
+		}
+	}
+
 	function update() {
 		scope = Scope.seek({cwd: folder.uri.fsPath});
-		@:privateAccess scope.logger = new OutputChannelLogger(outputChannel);
-		switcher = new Switcher(scope, true, outputChannel.appendLine);
+		@:privateAccess scope.logger = new OutputChannelLogger(appendToOutputChannel);
+		switcher = new Switcher(scope, true, appendToOutputChannel);
 
 		if (scope.isGlobal) {
-			outputChannel.hide();
+			if (outputChannel != null) {
+				outputChannel.dispose();
+				outputChannel = null;
+			}
 		} else {
-			outputChannel.show(true);
+			if (outputChannel == null) {
+				outputChannel = window.createOutputChannel("lix");
+			}
 		}
 
 		// TOOD: check if there were actually any changes?
@@ -76,30 +86,30 @@ class Lix {
 }
 
 private class OutputChannelLogger extends Logger {
-	final outputChannel:OutputChannel;
+	final appendToOutputChannel:String->Void;
 
-	public function new(outputChannel:OutputChannel) {
+	public function new(appendToOutputChannel) {
 		super();
-		this.outputChannel = outputChannel;
+		this.appendToOutputChannel = appendToOutputChannel;
 	}
 
 	override function error(s:String) {
-		outputChannel.appendLine('[error] $s');
+		appendToOutputChannel('[error] $s');
 	}
 
 	override function info(s:String) {
-		outputChannel.appendLine('[info] $s');
+		appendToOutputChannel('[info] $s');
 	}
 
 	override function warning(s:String) {
-		outputChannel.appendLine('[warning] $s');
+		appendToOutputChannel('[warning] $s');
 	}
 
 	override function progress(s:String) {
-		outputChannel.appendLine('[progress] $s');
+		appendToOutputChannel('[progress] $s');
 	}
 
 	override function success(s:String) {
-		outputChannel.appendLine('[success] $s');
+		appendToOutputChannel('[success] $s');
 	}
 }
