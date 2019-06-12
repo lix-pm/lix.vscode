@@ -45,7 +45,7 @@
 		"workspaceContains:./*.hxml",
 		"onCommand:lix.selectHaxeVersion",
 		"onCommand:lix.initializeProject",
-		"onCommand:lix.downloadMissingLibraries",
+		"onCommand:lix.downloadMissingDependencies",
 		"onCommand:lix.installLibrary"
 	],
 	"contributes": {
@@ -62,8 +62,8 @@
 			},
 			{
 				"category": "lix",
-				"command": "lix.downloadMissingLibraries",
-				"title": "Download Missing Libraries"
+				"command": "lix.downloadMissingDependencies",
+				"title": "Download Missing Dependencies"
 			},
 			{
 				"category": "lix",

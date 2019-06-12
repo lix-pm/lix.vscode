@@ -12,7 +12,7 @@ class Commands {
 		this.haxelib = haxelib;
 
 		commands.registerCommand(LixCommand.InitializeProject, initializeProject);
-		commands.registerCommand(LixCommand.DownloadMissingLibraries, downloadMissingLibraries);
+		commands.registerCommand(LixCommand.DownloadMissingDependencies, downloadMissingDependencies);
 		commands.registerCommand(LixCommand.InstallLibrary, installLibrary);
 	}
 
@@ -31,7 +31,7 @@ class Commands {
 		terminal.sendText("npm install lix --save-dev");
 	}
 
-	function downloadMissingLibraries() {
+	function downloadMissingDependencies() {
 		lix.run(["download"]);
 	}
 
