@@ -2,6 +2,7 @@
 */**
 !bin/extension.js
 !images/**
+!schemas/*.json
 !CHANGELOG.md
 !LICENSE.md
 !package.json
