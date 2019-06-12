@@ -53,11 +53,7 @@
 			{
 				"category": "lix",
 				"command": "lix.selectHaxeVersion",
-				"title": "Select Haxe Version",
-				"icon": {
-					"dark": "images/dark/haxe.svg",
-					"light": "images/light/haxe.svg"
-				}
+				"title": "Select Haxe Version"
 			},
 			{
 				"category": "lix",
@@ -96,20 +92,8 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "lix.selectHaxeVersion",
-					"when": "view == haxe.dependencies && lixActive",
-					"group": "navigation@0"
-				},
-				{
 					"command": "lix.installLibrary",
 					"when": "view == haxe.dependencies && lixActive",
-					"group": "navigation@0"
-				}
-			],
-			"editor/title": [
-				{
-					"command": "lix.selectHaxeVersion",
-					"when": "resourceFilename == .haxerc && lixActive",
 					"group": "navigation@0"
 				}
 			]
