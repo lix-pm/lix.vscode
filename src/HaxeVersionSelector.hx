@@ -53,8 +53,12 @@ class HaxeVersionSelector {
 
 	function selectHaxeVersion() {
 		if (lix.scope.isGlobal) {
-			// TODO: offer to create one
-			window.showErrorMessage("No .haxerc / local scope found.");
+			var InitializeProject = "Initialize Project";
+			window.showErrorMessage("No .haxerc / local scope found.", InitializeProject, "Close").then(function(pick) {
+				if (pick == InitializeProject) {
+					commands.executeCommand(LixCommand.InitializeProject);
+				}
+			});
 			return;
 		}
 		if (!didProvideExecutable()) {
