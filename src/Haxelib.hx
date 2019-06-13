@@ -33,6 +33,9 @@ class Haxelib {
 			return libraries;
 		}
 		var libraries = run('search ""');
+		if (libraries == null) {
+			return null;
+		}
 		libraries.pop(); // "n libraries found"
 		libraries.sort((a, b) -> Reflect.compare(a.toLowerCase(), b.toLowerCase()));
 		return this.libraries = libraries;
