@@ -20,8 +20,8 @@ class HaxeInstallationProvider {
 		this.resolveLibrary = resolveLibraryImpl;
 
 		lix.onDidChangeScope(function(_) {
-			updateInstallation();
 			updateRegistration();
+			updateInstallation();
 		});
 		updateRegistration();
 	}
