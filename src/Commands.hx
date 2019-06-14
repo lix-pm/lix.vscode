@@ -66,11 +66,11 @@ class Commands {
 			}
 
 			if (scheme == Haxelib) {
-				var libs = toQuickPickItems(haxelib.getLibraries());
+				var libs = haxelib.getLibraries();
 				if (libs == null) {
 					window.showInputBox(options).then(handleArgs);
 				} else {
-					window.showQuickPick(libs, {placeHolder: "Select Library"}).then(function(pick) {
+					window.showQuickPick(toQuickPickItems(libs), {placeHolder: "Select Library"}).then(function(pick) {
 						if (pick == null) {
 							return;
 						}
