@@ -1,3 +1,4 @@
+import js.node.ChildProcess;
 import sys.io.File;
 import sys.FileSystem;
 
@@ -19,17 +20,15 @@ class Commands {
 
 	function initializeProject() {
 		var path = folder.uri.fsPath;
-		Scope.create(path, {
-			version: "latest",
-			resolveLibs: Scoped
-		}).eager();
 		var packageJson = '$path/package.json';
 		if (!FileSystem.exists(packageJson)) {
 			File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
 		}
-		var terminal = window.createTerminal();
-		terminal.show();
-		terminal.sendText("npm install lix --save-dev");
+		ChildProcess.execSync("npm install lix --save-dev", {cwd: path});
+		Scope.create(path, {
+			version: "latest",
+			resolveLibs: Scoped
+		}).eager();
 	}
 
 	function ensureScope(f:() -> Void) {
