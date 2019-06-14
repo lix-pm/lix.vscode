@@ -1,6 +1,6 @@
 {
 	"name": "lix",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"publisher": "lix",
 	"engines": {
 		"vscode": "^1.31.0",

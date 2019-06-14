@@ -52,14 +52,14 @@ class HaxeInstallationProvider {
 	}
 
 	function updateRegistration() {
-		if (lix.scope.isGlobal) {
+		if (lix.active) {
+			if (disposable == null) {
+				disposable = vshaxe.registerHaxeInstallationProvider("lix", this);
+			}
+		} else {
 			if (disposable != null) {
 				disposable.dispose();
 				disposable = null;
-			}
-		} else {
-			if (disposable == null) {
-				disposable = vshaxe.registerHaxeInstallationProvider("lix", this);
 			}
 		}
 	}

@@ -1,3 +1,5 @@
+import sys.FileSystem;
+import haxe.io.Path;
 import js.node.Buffer;
 import js.node.stream.Readable.ReadableEvent;
 import js.node.ChildProcess;
@@ -6,6 +8,7 @@ import tink.CoreApi;
 import haxeshim.Logger;
 
 class Lix {
+	public var active(default, null):Bool;
 	public var scope(default, null):Scope;
 	public var switcher(default, null):Switcher;
 	public var onDidChangeScope(get, never):Event<Void>;
@@ -38,22 +41,24 @@ class Lix {
 	}
 
 	function update() {
+		active = FileSystem.exists(Path.join([folder.uri.fsPath, ".haxerc"]));
+
 		scope = Scope.seek({cwd: folder.uri.fsPath});
 		@:privateAccess scope.logger = new OutputChannelLogger(appendToOutputChannel);
 		switcher = new Switcher(scope, true, appendToOutputChannel);
 
-		if (scope.isGlobal) {
+		if (active) {
+			if (outputChannel == null) {
+				outputChannel = window.createOutputChannel("lix");
+			}
+		} else {
 			if (outputChannel != null) {
 				outputChannel.dispose();
 				outputChannel = null;
 			}
-		} else {
-			if (outputChannel == null) {
-				outputChannel = window.createOutputChannel("lix");
-			}
 		}
 
-		commands.executeCommand("setContext", "lixActive", !scope.isGlobal);
+		commands.executeCommand("setContext", "lixActive", active);
 
 		// TOOD: check if there were actually any changes?
 		_onDidChangeScope.fire();

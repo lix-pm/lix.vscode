@@ -37,7 +37,7 @@ class HaxeVersionSelector {
 
 	function updateStatusBarItem() {
 		var isHaxeFile = activeEditor != null && activeEditor.document.languageId == "haxe";
-		if (!lix.scope.isGlobal && isHaxeFile && didProvideExecutable()) {
+		if (lix.active && isHaxeFile && didProvideExecutable()) {
 			statusBarItem.text = lix.scope.haxeInstallation.version;
 			statusBarItem.show();
 		} else {

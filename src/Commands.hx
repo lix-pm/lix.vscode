@@ -34,7 +34,7 @@ class Commands {
 
 	function ensureScope(f:() -> Void) {
 		return function() {
-			if (lix.scope.isGlobal) {
+			if (!lix.active) {
 				var InitializeProject = "Initialize Project";
 				window.showErrorMessage("No .haxerc / local scope found.", InitializeProject, "Close").then(function(pick) {
 					if (pick == InitializeProject) {
