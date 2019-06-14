@@ -1,4 +1,6 @@
+import sys.io.File;
 import sys.FileSystem;
+import haxe.Json;
 import haxe.io.Path;
 import js.node.Buffer;
 import js.node.stream.Readable.ReadableEvent;
@@ -6,6 +8,7 @@ import js.node.ChildProcess;
 import js.node.child_process.ChildProcess.ChildProcessEvent;
 import tink.CoreApi;
 import haxeshim.Logger;
+import haxeshim.Config;
 
 class Lix {
 	public var active(default, null):Bool;
@@ -14,6 +17,8 @@ class Lix {
 	public var onDidChangeScope(get, never):Event<Void>;
 
 	var outputChannel:Null<OutputChannel>;
+	var config:Null<Config>;
+
 	final folder:WorkspaceFolder;
 	final _onDidChangeScope = new EventEmitter<Void>();
 
@@ -41,9 +46,17 @@ class Lix {
 	}
 
 	function update() {
-		active = FileSystem.exists(Path.join([folder.uri.fsPath, ".haxerc"]));
+		var file = Path.join([folder.uri.fsPath, ".haxerc"]);
+		active = FileSystem.exists(file);
+
+		var newConfig = Json.parse(File.getContent(file));
+		if (config != null && Json.stringify(config) == Json.stringify(newConfig)) {
+			return; // no changes
+		}
+		config = newConfig;
 
 		scope = Scope.seek({cwd: folder.uri.fsPath});
+
 		@:privateAccess scope.logger = new OutputChannelLogger(appendToOutputChannel);
 		switcher = new Switcher(scope, true, appendToOutputChannel);
 
@@ -59,8 +72,6 @@ class Lix {
 		}
 
 		commands.executeCommand("setContext", "lixActive", active);
-
-		// TOOD: check if there were actually any changes?
 		_onDidChangeScope.fire();
 	}
 
