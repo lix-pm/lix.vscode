@@ -49,7 +49,7 @@ class Lix {
 		var file = Path.join([folder.uri.fsPath, ".haxerc"]);
 		active = FileSystem.exists(file);
 
-		var newConfig = Json.parse(File.getContent(file));
+		var newConfig = if (active) Json.parse(File.getContent(file)) else null;
 		if (config != null && Json.stringify(config) == Json.stringify(newConfig)) {
 			return; // no changes
 		}
