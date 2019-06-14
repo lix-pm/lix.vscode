@@ -38,7 +38,7 @@
 		"url": "https://github.com/lix-pm/lix.vscode.git"
 	},
 	"scripts": {
-		"vscode:prepublish": "haxe build.hxml",
+		"vscode:prepublish": "npx haxe build.hxml",
 		"postinstall": "npx lix download"
 	},
 	"main": "bin/extension.js",
