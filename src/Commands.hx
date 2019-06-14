@@ -19,16 +19,20 @@ class Commands {
 	}
 
 	function initializeProject() {
-		var path = folder.uri.fsPath;
-		var packageJson = '$path/package.json';
-		if (!FileSystem.exists(packageJson)) {
-			File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
+		try {
+			var path = folder.uri.fsPath;
+			var packageJson = '$path/package.json';
+			if (!FileSystem.exists(packageJson)) {
+				File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
+			}
+			ChildProcess.execSync("npm install lix --save-dev", {cwd: path});
+			Scope.create(path, {
+				version: "latest",
+				resolveLibs: Scoped
+			}).eager();
+		} catch (e:Any) {
+			window.showErrorMessage(Std.string(e));
 		}
-		ChildProcess.execSync("npm install lix --save-dev", {cwd: path});
-		Scope.create(path, {
-			version: "latest",
-			resolveLibs: Scoped
-		}).eager();
 	}
 
 	function ensureScope(f:() -> Void) {
