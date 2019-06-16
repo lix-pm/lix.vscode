@@ -13,5 +13,6 @@ class Extension {
 		var haxelib = new Haxelib(folder, installation);
 		var selector = new HaxeVersionSelector(context, lix, vshaxe);
 		new Commands(folder, lix, haxelib, selector);
+		new LibraryCacheGuard(lix);
 	}
 }
