@@ -1,4 +1,4 @@
-### 1.0.2 (to be released)
+### 1.0.2 (June 16, 2019)
 
 - added a warning for editing files in the library cache
 
