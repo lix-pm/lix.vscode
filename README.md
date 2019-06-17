@@ -7,7 +7,6 @@ This Visual Studio Code extension adds support for [lix](https://github.com/lix-
 It makes the following assumptions:
 
 - `npm` and `npx` are available on the command line
-- lix is installed locally in the project as opposed to globally
 - vshaxe's `"haxe.executable"` and `"haxelib.executable"` settings are at their default values `"auto"` (existing projects may need an update if they explicitly specify the binaries in `node_modules`)
 
 ## Features
@@ -41,11 +40,11 @@ Click the "Install Library" button in the Haxe Dependencies view or run `lix: In
 
 ### Update Library
 
-The `lix: Update Library` command can be used to update an installed library to its available latest version.
+The `lix: Update Library` command can be used to update an installed library to its latest available version.
 
 ### Haxe Installation Auto-Detection
 
-If the `"haxe.executable"` and `"haxelib.executable"` settings are at their default values `"auto"`, they are automatically resolved to the local `haxe` / `haxelib` scripts in `node_modules/.bin` provided by lix.
+If the `"haxe.executable"` and `"haxelib.executable"` settings are at their default values `"auto"`, they are automatically resolved to the `haxe` / `haxelib` scripts provided by lix (either local or global).
 
 ### Haxe Dependencies Support
 
