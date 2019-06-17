@@ -14,8 +14,8 @@
 		"graceful-fs": "^4.1.15",
 		"tar": "^4.4.8",
 		"yauzl": "=2.6.0",
-		"webpack": "^4.32.0",
-		"webpack-cli": "^3.3.2"
+		"webpack": "^4.34.0",
+		"webpack-cli": "^3.3.4"
 	},
 	"displayName": "lix",
 	"description": "lix package manager support",

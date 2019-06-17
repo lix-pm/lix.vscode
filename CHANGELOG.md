@@ -1,6 +1,7 @@
 ### 1.1.0 (to be released)
 
 - added an "Update Library" command
+- added support for global lix installations ([#1](https://github.com/lix-pm/lix.vscode/issues/1))
 
 ### 1.0.2 (June 16, 2019)
 

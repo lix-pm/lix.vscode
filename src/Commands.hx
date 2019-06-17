@@ -22,20 +22,32 @@ class Commands {
 	}
 
 	function initializeProject() {
-		try {
-			var path = folder.uri.fsPath;
-			var packageJson = '$path/package.json';
-			if (!FileSystem.exists(packageJson)) {
-				File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
+		var items:Array<QuickPickItem> = [
+			{label: Local, description: "creates a scope, installs lix to node_modules and creates a package.json"},
+			{label: Global, description: "creates a scope, installs lix globally and replaces the global haxe command"}
+		];
+		window.showQuickPick(items).then(function(pick) {
+			if (pick == null) {
+				return;
 			}
-			ChildProcess.execSync("npm install lix --save-dev", {cwd: path});
-			Scope.create(path, {
-				version: "latest",
-				resolveLibs: Scoped
-			}).eager();
-		} catch (e:Any) {
-			window.showErrorMessage(Std.string(e));
-		}
+			try {
+				var path = folder.uri.fsPath;
+				switch pick.label {
+					case Local:
+						var packageJson = '$path/package.json';
+						if (!FileSystem.exists(packageJson)) {
+							File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
+						}
+						ChildProcess.execSync("npm install lix --save-dev", {cwd: path});
+
+					case Global:
+						ChildProcess.execSync("npm install --global lix");
+				}
+				Scope.create(path, {version: "latest", resolveLibs: Scoped}).eager();
+			} catch (e:Any) {
+				window.showErrorMessage(Std.string(e));
+			}
+		});
 	}
 
 	function ensureScope(f:() -> Void) {
@@ -145,6 +157,11 @@ class Commands {
 	function toQuickPickItems(a:Array<String>):Array<QuickPickItem> {
 		return a.map(s -> ({label: s} : QuickPickItem));
 	}
+}
+
+private enum abstract LixInstallation(String) to String {
+	var Local = "local";
+	var Global = "global";
 }
 
 private enum abstract Scheme(String) from String to String {
