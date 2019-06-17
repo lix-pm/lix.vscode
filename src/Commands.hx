@@ -1,6 +1,8 @@
 import js.node.ChildProcess;
 import sys.io.File;
-import sys.FileSystem;
+
+using sys.FileSystem;
+using haxe.io.Path;
 
 class Commands {
 	final folder:WorkspaceFolder;
@@ -15,6 +17,7 @@ class Commands {
 		commands.registerCommand(LixCommand.InitializeProject, initializeProject);
 		commands.registerCommand(LixCommand.DownloadMissingDependencies, ensureScope(downloadMissingDependencies));
 		commands.registerCommand(LixCommand.InstallLibrary, ensureScope(installLibrary));
+		commands.registerCommand(LixCommand.UpdateLibrary, ensureScope(updateLibrary));
 		commands.registerCommand(LixCommand.SelectHaxeVersion, ensureScope(selector.selectHaxeVersion));
 	}
 
@@ -98,6 +101,45 @@ class Commands {
 				window.showInputBox(options).then(handleArgs);
 			}
 		});
+	}
+
+	function updateLibrary() {
+		var libs = new Map<String, String>();
+		var scopeLibDir = lix.scope.scopeLibDir;
+		if (lix.scope.scopeLibDir.exists()) {
+			for (child in scopeLibDir.readDirectory()) {
+				var path = '$scopeLibDir/$child';
+				if (path.isDirectory() || !path.endsWith('.hxml')) {
+					continue;
+				}
+				var hxml = File.getContent(path);
+				var directives = @:privateAccess lix.scope.parseDirectives(hxml);
+				// this surely isn't the optimal way to do this...
+				final regex = ~/download "(.*?)" into/;
+				var directive = directives["install"];
+				if (directive == null || directive[0] == null || !regex.match(directive[0])) {
+					continue;
+				}
+				var arg = regex.matched(1);
+				var hashIndex = arg.lastIndexOf("#");
+				if (hashIndex != -1) {
+					arg = arg.substr(0, hashIndex);
+				}
+				var name = path.withoutDirectory().withoutExtension();
+				libs[name] = arg;
+			}
+		}
+
+		var items = toQuickPickItems([for (lib in libs.keys()) lib]);
+		if (items.length == 0) {
+			window.showInformationMessage("No libraries found in the current scope.");
+		} else {
+			window.showQuickPick(items, {placeHolder: "Select a Library to Update"}).then(function(pick) {
+				if (pick != null) {
+					lix.run(["install", libs[pick.label]]);
+				}
+			});
+		}
 	}
 
 	function toQuickPickItems(a:Array<String>):Array<QuickPickItem> {

@@ -39,6 +39,10 @@ Click the "Install Library" button in the Haxe Dependencies view or run `lix: In
 
 ![](images/readme/install-library.gif)
 
+### Update Library
+
+The `lix: Update Library` command can be used to update an installed library to its available latest version.
+
 ### Haxe Installation Auto-Detection
 
 If the `"haxe.executable"` and `"haxelib.executable"` settings are at their default values `"auto"`, they are automatically resolved to the local `haxe` / `haxelib` scripts in `node_modules/.bin` provided by lix.

@@ -1,3 +1,7 @@
+### 1.1.0 (to be released)
+
+- added an "Update Library" command
+
 ### 1.0.2 (June 16, 2019)
 
 - added a warning for editing files in the library cache

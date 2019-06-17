@@ -1,6 +1,6 @@
 {
 	"name": "lix",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"publisher": "lix",
 	"engines": {
 		"vscode": "^1.31.0",
@@ -50,7 +50,8 @@
 		"onCommand:lix.selectHaxeVersion",
 		"onCommand:lix.initializeProject",
 		"onCommand:lix.downloadMissingDependencies",
-		"onCommand:lix.installLibrary"
+		"onCommand:lix.installLibrary",
+		"onCommand:lix.updateLibrary"
 	],
 	"contributes": {
 		"commands": [
@@ -77,6 +78,11 @@
 					"dark": "images/dark/AddFolder.svg",
 					"light": "images/light/AddFolder.svg"
 				}
+			},
+			{
+				"category": "lix",
+				"command": "lix.updateLibrary",
+				"title": "Update Library"
 			}
 		],
 		"languages": [
