@@ -1,3 +1,7 @@
+### 1.1.1 (August 8, 2019)
+
+- fixed download of recent Haxe nightly builds ([lix.client#86](https://github.com/lix-pm/lix.client/pull/86))
+
 ### 1.1.0 (June 17, 2019)
 
 - added an "Update Library" command
