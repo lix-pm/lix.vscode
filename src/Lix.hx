@@ -57,8 +57,7 @@ class Lix {
 
 		scope = Scope.seek({cwd: folder.uri.fsPath});
 
-		@:privateAccess scope.logger = new OutputChannelLogger(appendToOutputChannel);
-		switcher = new Switcher(scope, true, appendToOutputChannel);
+		switcher = new Switcher(scope, new OutputChannelLogger(appendToOutputChannel));
 
 		if (active) {
 			if (outputChannel == null) {

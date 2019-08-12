@@ -2,6 +2,7 @@
 
 - changed the required VSCode version to 1.37.0
 - updated the "Install Library" icon for VSCode 1.37.0
+- updated lix to 15.5.3
 
 ### 1.1.1 (August 8, 2019)
 
