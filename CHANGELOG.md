@@ -1,3 +1,8 @@
+### 1.1.2 (August 12, 2019)
+
+- changed the required VSCode version to 1.37.0
+- updated the "Install Library" icon for VSCode 1.37.0
+
 ### 1.1.1 (August 8, 2019)
 
 - fixed download of recent Haxe nightly builds ([lix.client#86](https://github.com/lix-pm/lix.client/pull/86))
