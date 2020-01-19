@@ -1,8 +1,8 @@
 import js.node.ChildProcess;
 import sys.io.File;
 
-using sys.FileSystem;
 using haxe.io.Path;
+using sys.FileSystem;
 
 class Commands {
 	final folder:WorkspaceFolder;

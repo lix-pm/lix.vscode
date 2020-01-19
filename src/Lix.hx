@@ -1,14 +1,14 @@
-import sys.io.File;
-import sys.FileSystem;
 import haxe.Json;
 import haxe.io.Path;
+import haxeshim.Config;
+import haxeshim.Logger;
 import js.node.Buffer;
-import js.node.stream.Readable.ReadableEvent;
 import js.node.ChildProcess;
 import js.node.child_process.ChildProcess.ChildProcessEvent;
+import js.node.stream.Readable.ReadableEvent;
+import sys.FileSystem;
+import sys.io.File;
 import tink.CoreApi;
-import haxeshim.Logger;
-import haxeshim.Config;
 
 class Lix {
 	public var active(default, null):Bool;

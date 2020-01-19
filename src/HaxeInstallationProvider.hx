@@ -1,9 +1,9 @@
+import haxe.io.Path;
 import js.node.Buffer;
 import js.node.ChildProcess;
-import haxe.io.Path;
 import sys.FileSystem;
-import vshaxe.Library;
 import vshaxe.HaxeInstallation;
+import vshaxe.Library;
 
 class HaxeInstallationProvider {
 	public var resolveLibrary:(classpath:String) -> Null<Library>;

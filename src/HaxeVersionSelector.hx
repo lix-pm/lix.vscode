@@ -1,6 +1,6 @@
+import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 import sys.FileSystem;
 import tink.CoreApi.Noise;
-import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 
 class HaxeVersionSelector {
 	final lix:Lix;
