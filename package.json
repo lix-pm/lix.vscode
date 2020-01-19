@@ -13,7 +13,7 @@
 		"lix": "^15.8.3",
 		"@zeit/ncc": "^0.20.4",
 		"tar": "^4.4.8",
-		"yauzl": "^2.10.0",
+		"yauzl": "github:lix-pm/yauzl",
 		"graceful-fs": "^4.1.15",
 		"webpack": "^4.39.1",
 		"webpack-cli": "^3.3.6"
