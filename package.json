@@ -10,7 +10,7 @@
 		"nadako.vshaxe"
 	],
 	"devDependencies": {
-		"lix": "^15.5.3",
+		"lix": "^15.8.3",
 		"@zeit/ncc": "^0.20.4",
 		"tar": "^4.4.8",
 		"yauzl": "^2.10.0",
