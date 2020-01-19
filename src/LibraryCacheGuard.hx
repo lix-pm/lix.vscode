@@ -9,7 +9,8 @@ class LibraryCacheGuard {
 			}
 			warned[path] = true;
 			var libCache = Util.normalizePath(lix.scope.libCache);
-			if (path.startsWith(libCache)) {
+			var versionDir = Util.normalizePath(lix.scope.versionDir);
+			if (path.startsWith(libCache) || path.startsWith(versionDir)) {
 				window.showWarningMessage("It is strongly recommended not to edit files in the lix library cache. It can result in a non-reproducible setup.",
 					{modal: true});
 			}
