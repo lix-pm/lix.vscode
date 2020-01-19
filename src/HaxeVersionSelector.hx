@@ -1,3 +1,4 @@
+import haxe.io.Path;
 import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
 import sys.FileSystem;
 import tink.CoreApi.Noise;
@@ -36,7 +37,15 @@ class HaxeVersionSelector {
 	}
 
 	function updateStatusBarItem() {
-		var isHaxeFile = activeEditor != null && activeEditor.document.languageId == "haxe";
+		var isHaxeFile = false;
+		if (activeEditor != null) {
+			var languageId = activeEditor.document.languageId;
+			if (languageId == "haxe" || languageId == "hxml") {
+				isHaxeFile = true;
+			} else if (Path.withoutDirectory(activeEditor.document.uri.path) == ".haxerc") {
+				isHaxeFile = true;
+			}
+		}
 		if (lix.active && isHaxeFile && didProvideExecutable()) {
 			statusBarItem.text = lix.scope.haxeInstallation.version;
 			statusBarItem.show();
