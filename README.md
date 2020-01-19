@@ -22,7 +22,7 @@ To get started with lix in a project that doesn't use it yet, run the `lix: Init
 
 ### Haxe Version Selector
 
-When a `.hx` file is open, the lix extension displays the Haxe version selected for the current project in `.haxerc` in the bottom right of the status bar:
+When a `*.hx`, `*.hxml` or `.haxerc` file is open, the lix extension displays the Haxe version selected for the current project in the bottom right of the status bar:
 
 ![](images/readme/status-bar.png)
 

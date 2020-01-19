@@ -1,3 +1,9 @@
+### 1.2.0 (January 19, 2019)
+
+- added a warning for editing files in the standard library
+- made the version selector UI show up in HXML and `.haxerc` files as well
+- updated lix to 15.8.3
+
 ### 1.1.2 (August 12, 2019)
 
 - changed the required VSCode version to 1.37.0
