@@ -1,5 +1,6 @@
 ### 1.2.1 (to be released)
 
+- improved "Select Haxe Version" to remember custom directories
 - fixed "Install Library" for libs with an empty release note
 
 ### 1.2.0 (January 19, 2019)

@@ -1,5 +1,6 @@
 import haxe.io.Path;
 import tink.core.Promise;
+import sys.FileSystem;
 
 class Util {
 	public static function withProgress<T>(title:String, promise:Promise<T>) {
@@ -18,5 +19,15 @@ class Util {
 			path = path.substr(0, 1).toUpperCase() + path.substr(1);
 		}
 		return path;
+	}
+
+	public static function isPath(s:String):Bool {
+		return s.contains("/") || s.contains("\\");
+	}
+
+	public static function containsHaxeExecutable(dir:String):Bool {
+		var isWindows = Sys.systemName() == "Windows";
+		var haxe = '$dir/haxe' + (if (isWindows) ".exe" else "");
+		return FileSystem.exists(haxe);
 	}
 }

@@ -11,6 +11,8 @@ import sys.io.File;
 import tink.CoreApi;
 
 class Lix {
+	static inline final CUSTOM_HAXE_DIRECTORIES_KEY = "customHaxeDirectories";
+
 	public var active(default, null):Bool;
 	public var scope(default, null):Scope;
 	public var switcher(default, null):Switcher;
@@ -19,6 +21,7 @@ class Lix {
 	var outputChannel:Null<OutputChannel>;
 	var config:Null<Config>;
 
+	final context:ExtensionContext;
 	final folder:WorkspaceFolder;
 	final _onDidChangeScope = new EventEmitter<Void>();
 
@@ -26,6 +29,7 @@ class Lix {
 		return _onDidChangeScope.event;
 
 	public function new(context, folder) {
+		this.context = context;
 		this.folder = folder;
 
 		haxe.Log.trace = (v, ?infos) -> appendToOutputChannel(Std.string(v));
@@ -70,6 +74,15 @@ class Lix {
 			}
 		}
 
+		var version = scope.haxeInstallation.version;
+		if (Util.isPath(version)) {
+			var path = Util.normalizePath(version);
+			var paths = getCustomHaxeDirectories();
+			if (!paths.contains(path)) {
+				setCustomHaxeDirectories(paths.concat([path]));
+			}
+		}
+
 		commands.executeCommand("setContext", "lixActive", active);
 		_onDidChangeScope.fire();
 	}
@@ -99,6 +112,19 @@ class Lix {
 				}
 			});
 		}, true));
+	}
+
+	public function getCustomHaxeDirectories():Array<String> {
+		var paths = context.globalState.get(CUSTOM_HAXE_DIRECTORIES_KEY, []);
+		var filteredPaths = paths.filter(Util.containsHaxeExecutable);
+		if (paths.length != filteredPaths.length) {
+			setCustomHaxeDirectories(filteredPaths);
+		}
+		return filteredPaths;
+	}
+
+	function setCustomHaxeDirectories(directories:Array<String>) {
+		context.globalState.update(CUSTOM_HAXE_DIRECTORIES_KEY, directories);
 	}
 }
 

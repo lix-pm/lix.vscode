@@ -86,6 +86,12 @@ class HaxeVersionSelector {
 						}
 					case Failure(_):
 				}
+				for (path in lix.getCustomHaxeDirectories()) {
+					items.push({
+						label: path,
+						select: switchToVersion.bind(RCustom(path))
+					});
+				}
 				for (item in items) {
 					if (item.label == lix.scope.haxeInstallation.version) {
 						item.description = "selected";
@@ -124,12 +130,10 @@ class HaxeVersionSelector {
 		window.showOpenDialog({canSelectFiles: false, canSelectFolders: true}).then(function(uris) {
 			if (uris != null && uris.length > 0) {
 				var path = Util.normalizePath(uris[0].fsPath);
-				var isWindows = Sys.systemName() == "Windows";
-				var haxe = '$path/haxe' + (if (isWindows) ".exe" else "");
-				if (FileSystem.exists(haxe)) {
+				if (Util.containsHaxeExecutable(path)) {
 					lix.switcher.switchTo(RCustom(path)).eager();
 				} else {
-					window.showErrorMessage('"$haxe" does not exist', "Retry", "Close").then(choice -> {
+					window.showErrorMessage('No Haxe executable found in $path', "Retry", "Close").then(choice -> {
 						if (choice == "Retry") {
 							switchToDirectory();
 						}
