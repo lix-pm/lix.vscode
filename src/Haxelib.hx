@@ -56,7 +56,7 @@ class Haxelib {
 		}
 		output = output.slice(releaseIndex + 1);
 		output.reverse();
-		final regex = ~/^(.*?) (.*?) (.*?) : (.*?)$/;
+		final regex = ~/^(.*?) (.*?) (.*?) : ?(.*?)$/;
 		var releases:Array<Release> = [];
 		for (line in output) {
 			if (!regex.match(line)) {
@@ -66,7 +66,7 @@ class Haxelib {
 				date: regex.matched(1),
 				time: regex.matched(2),
 				version: regex.matched(3),
-				releaseNotes: regex.matched(4)
+				notes: regex.matched(4)
 			});
 		}
 		this.releases[library] = releases;
@@ -78,5 +78,5 @@ typedef Release = {
 	final date:String;
 	final time:String;
 	final version:String;
-	final releaseNotes:String;
+	final notes:String;
 }

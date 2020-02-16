@@ -97,7 +97,7 @@ class Commands {
 						if (releases != null) {
 							var releaseItems = releases.map(release -> ({
 								label: release.version,
-								description: release.date + " - " + release.releaseNotes
+								description: release.date + (if (release.notes == "") "" else " - " + release.notes)
 							} : QuickPickItem));
 							window.showQuickPick(releaseItems, {placeHolder: "Select Version"}).then(function(pick) {
 								if (pick != null) {

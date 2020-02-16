@@ -1,3 +1,7 @@
+### 1.2.1 (to be released)
+
+- fixed "Install Library" for libs with an empty release note
+
 ### 1.2.0 (January 19, 2019)
 
 - added a warning for editing files in the standard library
