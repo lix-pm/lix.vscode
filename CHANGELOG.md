@@ -1,9 +1,9 @@
-### 1.2.1 (to be released)
+### 1.2.1 (February 16, 2020)
 
 - improved "Select Haxe Version" to remember custom directories
 - fixed "Install Library" for libs with an empty release note
 
-### 1.2.0 (January 19, 2019)
+### 1.2.0 (January 19, 2020)
 
 - added a warning for editing files in the standard library
 - made the version selector UI show up in HXML and `.haxerc` files as well
