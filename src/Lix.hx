@@ -17,6 +17,7 @@ class Lix {
 	public var scope(default, null):Scope;
 	public var switcher(default, null):Switcher;
 	public var onDidChangeScope(get, never):Event<Void>;
+	public var haxeVersion(get, never):String;
 
 	var outputChannel:Null<OutputChannel>;
 	var config:Null<Config>;
@@ -27,6 +28,9 @@ class Lix {
 
 	inline function get_onDidChangeScope()
 		return _onDidChangeScope.event;
+
+	inline function get_haxeVersion()
+		return Util.normalizePath(scope.haxeInstallation.version);
 
 	public function new(context, folder) {
 		this.context = context;
@@ -74,12 +78,11 @@ class Lix {
 			}
 		}
 
-		var version = scope.haxeInstallation.version;
+		var version = haxeVersion;
 		if (Util.isPath(version)) {
-			var path = Util.normalizePath(version);
 			var paths = getCustomHaxeDirectories();
-			if (!paths.contains(path)) {
-				setCustomHaxeDirectories(paths.concat([path]));
+			if (!paths.contains(version)) {
+				setCustomHaxeDirectories(paths.concat([version]));
 			}
 		}
 

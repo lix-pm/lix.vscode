@@ -11,8 +11,11 @@ class Util {
 		});
 	}
 
-	public static function normalizePath(path:String):String {
-		path = Path.normalize(path);
+	public static function normalizePath(s:String):String {
+		if (!isPath(s)) {
+			return s;
+		}
+		var path = Path.normalize(s);
 		var isWindows = Sys.systemName() == "Windows";
 		if (isWindows) {
 			// c: -> C:

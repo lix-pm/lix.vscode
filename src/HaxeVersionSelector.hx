@@ -1,6 +1,5 @@
 import haxe.io.Path;
 import lix.client.haxe.ResolvedVersion.ResolvedUserVersionData;
-import sys.FileSystem;
 import tink.CoreApi.Noise;
 
 class HaxeVersionSelector {
@@ -47,7 +46,7 @@ class HaxeVersionSelector {
 			}
 		}
 		if (lix.active && isHaxeFile && didProvideExecutable()) {
-			statusBarItem.text = lix.scope.haxeInstallation.version;
+			statusBarItem.text = lix.haxeVersion;
 			statusBarItem.show();
 		} else {
 			statusBarItem.hide();
@@ -93,7 +92,7 @@ class HaxeVersionSelector {
 					});
 				}
 				for (item in items) {
-					if (item.label == lix.scope.haxeInstallation.version) {
+					if (item.label == lix.haxeVersion) {
 						item.description = "selected";
 					}
 				}
