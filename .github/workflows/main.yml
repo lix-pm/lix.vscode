@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1.1.0
     - run: npm install
     - run: npx haxe build.hxml
     - run: npx haxe schema.hxml
