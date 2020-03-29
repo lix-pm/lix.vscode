@@ -1,3 +1,4 @@
+import haxe.Json;
 import js.node.ChildProcess;
 import sys.io.File;
 
@@ -36,7 +37,12 @@ class Commands {
 					case Local:
 						var packageJson = '$path/package.json';
 						if (!FileSystem.exists(packageJson)) {
-							File.saveContent(packageJson, '{\n\t"devDependencies": {}\n}');
+							File.saveContent(packageJson, Json.stringify({
+								devDependencies: {},
+								scripts: {
+									postinstall: "lix download"
+								}
+							}, "\t"));
 						}
 						ChildProcess.execSync("npm install lix --save-dev", {cwd: path});
 

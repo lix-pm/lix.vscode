@@ -1,3 +1,7 @@
+### 1.2.2 (to be released)
+
+- improved "Initialize Project" to automatically add a `lix download` postinstall
+
 ### 1.2.1 (February 16, 2020)
 
 - improved "Select Haxe Version" to remember custom directories
