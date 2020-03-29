@@ -1,4 +1,4 @@
-### 1.2.2 (to be released)
+### 1.2.2 (March 29, 2020)
 
 - improved "Initialize Project" to automatically add a `lix download` postinstall
 
