@@ -1,6 +1,6 @@
 # lix.vscode
 
-![CI](https://github.com/lix-pm/lix.vscode/workflows/CI/badge.svg) [![Version](https://vsmarketplacebadge.apphb.com/version-short/lix.lix.svg)](https://marketplace.visualstudio.com/items?itemName=lix.lix) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/lix.lix.svg)](https://marketplace.visualstudio.com/items?itemName=lix.lix) [![Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/lix.lix.svg)](https://marketplace.visualstudio.com/items?itemName=lix.lix) [![](https://img.shields.io/discord/162395145352904705.svg?logo=discord)](https://discord.gg/v37ybBR)
+![CI](https://img.shields.io/github/workflow/status/lix-pm/lix.vscode/CI.svg?logo=github) [![Version](https://vsmarketplacebadge.apphb.com/version-short/lix.lix.svg)](https://marketplace.visualstudio.com/items?itemName=lix.lix) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/lix.lix.svg)](https://marketplace.visualstudio.com/items?itemName=lix.lix) [![Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/lix.lix.svg)](https://marketplace.visualstudio.com/items?itemName=lix.lix) [![](https://img.shields.io/discord/162395145352904705.svg?logo=discord)](https://discord.gg/v37ybBR)
 
 This Visual Studio Code extension adds support for [lix](https://github.com/lix-pm), a package manager for Haxe.
 
