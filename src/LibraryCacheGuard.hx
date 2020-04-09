@@ -1,7 +1,7 @@
 class LibraryCacheGuard {
 	public function new(lix:Lix) {
 		var warned = new Map<String, Bool>();
-		var watcher = workspace.createFileSystemWatcher("**/*.hx", true, false, true);
+		var watcher = workspace.createFileSystemWatcher("**/*.*", true, false, true);
 		watcher.onDidChange(function(uri) {
 			var path = Util.normalizePath(uri.fsPath);
 			if (warned[path]) {
