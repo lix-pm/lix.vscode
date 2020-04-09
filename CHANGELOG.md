@@ -1,4 +1,4 @@
-### 1.2.3 (to be released)
+### 1.2.3 (April 9, 2020)
 
 - extended the warning for editing files in the library cache to non-`.hx` files
 - updated lix to 15.8.11
