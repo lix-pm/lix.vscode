@@ -1,5 +1,5 @@
--D lix=15.8.3
-# @install: lix --silent download "gh://github.com/lix-pm/lix.client#4abebdb6b7ad3e8ead070c759bf457b94df85332" into lix/15.8.3/github/4abebdb6b7ad3e8ead070c759bf457b94df85332
+-D lix=15.8.11
+# @install: lix --silent download "gh://github.com/lix-pm/lix.client#765377bf9ab0c81f5cecdef15ff5bc76d17cdae4" into lix/15.8.11/github/765377bf9ab0c81f5cecdef15ff5bc76d17cdae4
 
 --macro addMetadata('@:using(tmp.ArrayTools)', 'Array')
 -lib haxeshim
@@ -9,5 +9,5 @@
 -lib hxnodejs
 -lib tink_lang
 
--cp ${HAXE_LIBCACHE}/lix/15.8.3/github/4abebdb6b7ad3e8ead070c759bf457b94df85332/src
--cp ${HAXE_LIBCACHE}/lix/15.8.3/github/4abebdb6b7ad3e8ead070c759bf457b94df85332/patch
+-cp ${HAXE_LIBCACHE}/lix/15.8.11/github/765377bf9ab0c81f5cecdef15ff5bc76d17cdae4/src
+-cp ${HAXE_LIBCACHE}/lix/15.8.11/github/765377bf9ab0c81f5cecdef15ff5bc76d17cdae4/patch

@@ -1,3 +1,7 @@
+### 1.2.3 (to be released)
+
+- updated lix to 15.8.11
+
 ### 1.2.2 (March 29, 2020)
 
 - improved "Initialize Project" to automatically add a `lix download` postinstall
