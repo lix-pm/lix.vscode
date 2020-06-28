@@ -2,11 +2,11 @@
 -lib lix
 -lib hx3compat
 -cp src
--js bin/extension.js
+-js bin/index.js
 -D no-deprecation-warnings
 -D analyzer-optimize
 -D js-es=6
 -dce full
 -debug
 Extension
--cmd npx webpack --mode production --silent
+-cmd npx ncc build bin/index.js -o bin -m -q

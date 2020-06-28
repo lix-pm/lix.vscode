@@ -11,12 +11,10 @@
 	],
 	"devDependencies": {
 		"lix": "^15.8.11",
-		"@zeit/ncc": "^0.20.4",
+		"@zeit/ncc": "^0.22.3",
 		"graceful-fs": "^4.1.15",
 		"tar": "^6.0.1",
-		"yauzl": "github:lix-pm/yauzl",
-		"webpack": "^4.42.1",
-		"webpack-cli": "^3.3.11"
+		"yauzl": "github:lix-pm/yauzl"
 	},
 	"displayName": "lix",
 	"description": "lix package manager support",
@@ -42,7 +40,7 @@
 		"vscode:prepublish": "npx haxe build.hxml",
 		"postinstall": "npx lix download"
 	},
-	"main": "bin/extension.js",
+	"main": "bin/index.js",
 	"activationEvents": [
 		"onLanguage:haxe",
 		"workspaceContains:.haxerc",
