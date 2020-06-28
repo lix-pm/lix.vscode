@@ -7,6 +7,7 @@ import vshaxe.Library;
 
 class HaxeInstallationProvider {
 	public var resolveLibrary:(classpath:String) -> Null<Library>;
+	public var listLibraries:() -> Array<{name:String}>;
 	public var installation(default, null):HaxeInstallation = {};
 
 	final folder:WorkspaceFolder;
@@ -21,6 +22,7 @@ class HaxeInstallationProvider {
 		this.lix = lix;
 		this.vshaxe = vshaxe;
 		this.resolveLibrary = resolveLibraryImpl;
+		this.listLibraries = listLibrariesImpl;
 
 		lix.onDidChangeScope(function(_) {
 			updateRegistration();
@@ -115,5 +117,15 @@ class HaxeInstallationProvider {
 			version: version,
 			path: path
 		};
+	}
+
+	function listLibrariesImpl():Array<{name:String}> {
+		final haxeLibraries = lix.scope.scopeLibDir;
+		if (!FileSystem.exists(haxeLibraries) || !FileSystem.isDirectory(haxeLibraries)) {
+			return [];
+		}
+		return FileSystem.readDirectory(haxeLibraries)
+			.filter(file -> file.endsWith(".hxml"))
+			.map(file -> {name: file.substr(0, file.length - ".hxml".length)});
 	}
 }

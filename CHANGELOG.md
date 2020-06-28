@@ -1,3 +1,7 @@
+### 1.3.0 (to be released)
+
+- added support for HXML `--library` completion with vshaxe 2.21.0
+
 ### 1.2.3 (April 9, 2020)
 
 - extended the warning for editing files in the library cache to non-`.hx` files
