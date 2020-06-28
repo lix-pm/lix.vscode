@@ -1,4 +1,4 @@
-### 1.3.0 (to be released)
+### 1.3.0 (June 28, 2020)
 
 - added support for HXML `--library` completion with vshaxe 2.21.0
 
